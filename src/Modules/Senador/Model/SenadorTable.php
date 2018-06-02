@@ -42,5 +42,4 @@ class SenadorTable {
         }
         return $csv;
     }
-
 }
