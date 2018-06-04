@@ -6,36 +6,31 @@
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
         $dados = $ctrl->indexAction();
         ?>
-        <style  type="text/css"><?php include_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . "/../vendor/twbs/bootstrap/dist/css/bootstrap.css"; ?></style>
-        <style  type="text/css"><?php include_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . "/../vendor/twbs/bootstrap/docs/4.1/examples/navbar-static/navbar-top.css"; ?></style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css" type="text/css">
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-default bg-white mb-4">
-            <div class="col-xs-4 col-md-2">
+        <div class="row">
+            <div class="col-md-2">
                 <a class="navbar-brand" href="#">
-                    <img alt="Brand" src="img/logo meu senador 2.png" class="img-thumbnail">
+                    <img alt="Brand" src="img/logo meu senador 2.png" class="img-thumbnail size">
+                    <h5 class="caption center-block">Meu Senador</h5>
                 </a>
-                <div class="caption"><h5>Meu Senador</h5></div>
             </div>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Disabled</a>
-                    </li>
-                </ul>
-            </div>
+        </div>
+        <div class="links">
+            <a href="">Home</a>
+            <a href="">Contato</a>
+            <a href="">Sobre</a>
+        </div>
         </nav>
+        
         <div class="container">
             <div class="content">
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-0">
-                      <form method="post" action="" class="form-signin">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                    <form method="post" action="" class="form-signin">
                     <div class="form-group">
                         <label for="parlamentares" class="sr">Parlamentar:</label>
                         <select name="parlamentares" class="form-control"
@@ -52,7 +47,7 @@
                     </div>
                     <input type="button" name="btnOk" value="Confirma" onload="disabled" 
                            data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-success">
-                </form>  
+                </form>
                     </div>
                 </div>
             </div>
@@ -72,7 +67,7 @@
                         <div class="modal-footer">
                             <button class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
-                        <!-- Fim do content -->
+                        <!-- Fim do modal-content -->
                     </div>
                     <!-- Fim do modal -->
                 </div>

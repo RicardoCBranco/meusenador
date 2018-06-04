@@ -24,22 +24,17 @@ class SenadorTable {
         }
         return $array;
     }
-
-    public static function gastos($nome) {
-        $tabGastos = self::tabelaGastos();
-        return array_values(array_filter($tabGastos, function($arrayValue) 
-                use ($nome){return $arrayValue[2] == $nome;}));
-    }
     
-    private static function tabelaGastos(){
-        $i = 0;
-        $handle = fopen("http://www.senado.gov.br/transparencia/LAI/verba/2018.csv", "r");
-        while (($data = fgetcsv($handle,0,";")) != FALSE){
-            if(count($data) == 10){
-             $csv[$i] = $data;
-             $i++;   
+    public static function gastos($nome){
+        $csv = fopen("http://www.senado.gov.br/transparencia/LAI/verba/2018.csv",'r');
+        $array = [];
+        while (($lin = fgetcsv($csv,4096,";")) !== FALSE){
+            if(count($lin) == 10 && mb_strtoupper(utf8_encode($lin[2])) == mb_strtoupper($nome))  {
+                $array[] = $lin;
             }
         }
-        return $csv;
+        fclose($csv);
+        array_shift($array);
+        return $array;
     }
 }

@@ -10,7 +10,7 @@ $parlamentar = $dados['parlamentar'];
             class="img-thumbnail" style="width:100%">
     </div>
     <div class="col-lg-6">
-        <a href="gastos.php?nome=<?= strtoupper($parlamentar->getNomeParlamentar())?>">
+        <a href="gastos/?nome=<?=$parlamentar->getNomeParlamentar()?>">
     <img class="img-fluid img-thumbnail" src="img/Dinheiro1.png"
          title="Gastos" width="50px" height="50px">
     </a>

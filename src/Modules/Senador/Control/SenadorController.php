@@ -10,9 +10,9 @@ use Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
             $this->table = SenadorTable::all();
         }
   
-  	public function indexAction(){
+  	    public function indexAction(){
             return array('senadores' => $this->table);
-  	}
+  	    }
         
         public function showAction(){
            $codigo = filter_input(INPUT_GET, "parlamentar");
@@ -21,8 +21,7 @@ use Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
         }
         
         public function gastosAction(){
-            $nome = filter_input(INPUT_GET, "nome");
-            $gastos = SenadorTable::gastos($nome);
+            $gastos = SenadorTable::gastos(filter_input(INPUT_GET,"nome"));
             return array('gastos' => $gastos);
         }
 
