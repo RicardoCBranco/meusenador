@@ -6,15 +6,17 @@
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
         $dados = $ctrl->indexAction();
         ?>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" 
+         crossorigin="anonymous"/>
+        <link rel="stylesheet" href="css/main.css" type="text/css"/>
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-default bg-white mb-4">
         <div class="row">
             <div class="col-md-2">
                 <a class="navbar-brand" href="#">
-                    <img alt="Brand" src="img/logo meu senador 2.png" class="img-thumbnail size">
+                    <img alt="Brand" src="img/logo meu senador 2.png" class="img-thumbnail size"/>
                     <h5 class="caption center-block">Meu Senador</h5>
                 </a>
             </div>
@@ -22,7 +24,7 @@
         <div class="links">
             <a href="">Home</a>
             <a href="">Contato</a>
-            <a href="">Sobre</a>
+            <a href="" onload="disabled" data-toggle="modal" data-target="#modalSobre">Sobre</a>
         </div>
         </nav>
         
@@ -31,9 +33,9 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                     <form method="post" action="" class="form-signin">
-                    <div class="form-group">
-                        <label for="parlamentares" class="sr">Parlamentar:</label>
-                        <select name="parlamentares" class="form-control"
+                        <div class="form-group">
+                            <label for="parlamentares" class="sr">Parlamentar:</label>
+                            <select name="parlamentares" class="form-control"
                                 id="parlamentares" onchange="dados(this.id, 'modal')">
                             <option>Selecione um político</option>
                             <?php foreach ($dados['senadores'] as $opt): ?>
@@ -43,11 +45,11 @@
                                         <?php endif; ?>
                                         ><?= $opt->getNomeParlamentar() ?></option>
                                     <?php endforeach; ?>
-                        </select>
-                    </div>
+                            </select>
+                            </div>
                     <input type="button" name="btnOk" value="Confirma" onload="disabled" 
                            data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-success">
-                </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -70,6 +72,25 @@
                         <!-- Fim do modal-content -->
                     </div>
                     <!-- Fim do modal -->
+                </div>
+                <!-- Modal do Sobre -->
+                <div class="modal" id="modalSobre">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <!-- Titulo do Sobre -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Sobre</h4>
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <!-- Corpo do modal -->
+                            <div class="modal-body" id="modal">
+                                <p>Versão do sistema Meu senador</p>
+                            </div>
+                            <!-- Rodapé do modal -->
+                            <div class="modal-footer">
+                                <button class="btn btn-danger" data-dismiss="modal2">Close</button>
+                            </div>
+                        </div>
+                        <!-- Fim do Titulo do Sobre -->
+                    </div>
                 </div>
             </div>
             <!-- Fim do Container -->
