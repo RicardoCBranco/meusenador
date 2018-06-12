@@ -39,11 +39,11 @@
                                 id="parlamentares" onchange="dados(this.id, 'modal')">
                             <option>Selecione um político</option>
                             <?php foreach ($dados['senadores'] as $opt): ?>
-                                <option value="<?= $opt->getCodigoParlamentar() ?>"
-                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt->getCodigoParlamentar()): ?>
+                                <option value="<?= $opt->codigo_parlamentar ?>"
+                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt->codigo_parlamentar): ?>
                                             selected
                                         <?php endif; ?>
-                                        ><?= $opt->getNomeParlamentar() ?></option>
+                                        ><?= $opt->nome_parlamentar ?></option>
                                     <?php endforeach; ?>
                             </select>
                             </div>
@@ -73,27 +73,38 @@
                     </div>
                     <!-- Fim do modal -->
                 </div>
-                <!-- Modal do Sobre -->
-                <div class="modal" id="modalSobre">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <!-- Titulo do Sobre -->
+            </div>
+            <!-- Estrutura do modal Sobre-->
+            <div class="modal" id="modalSobre">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Titulo -->
                         <div class="modal-header">
                             <h4 class="modal-title">Sobre</h4>
                             <button class="close" data-dismiss="modal">&times;</button>
-                            <!-- Corpo do modal -->
-                            <div class="modal-body" id="modal">
-                                <p>Versão do sistema Meu senador</p>
-                            </div>
-                            <!-- Rodapé do modal -->
-                            <div class="modal-footer">
-                                <button class="btn btn-danger" data-dismiss="modal2">Close</button>
-                            </div>
                         </div>
-                        <!-- Fim do Titulo do Sobre -->
+                        <!-- Corpo -->
+                        <div class="modal-body" id="modal">
+                        <h5>Meu Senador</h5>
+                        <p>Site desenvolvido para acompanhamento do mandato dos parlamentares eleitos
+                        para ocupar o cargo de Senador.</p>
+                        <span>v.1.1.0</span>
+                        <ul>Autores:
+                        <li>Antonio Ricardo Andrade Castelo Branco</li>
+                        <li>Wellington</li>
+                        <li>Verônica</li>
+                        </ul>
+                        </div>
+                        <!-- Rodapé -->
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                        <!-- Fim do modal-content -->
                     </div>
+                    <!-- Fim do modal -->
                 </div>
             </div>
-            <!-- Fim do Container -->
+
         </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

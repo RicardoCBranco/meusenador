@@ -1,22 +1,22 @@
 <?php
 namespace Ufrpe\Senadores\Modules\Senador\Control;
 
-use Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
+use \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
 
   class SenadorController  {
       private $table;
       
         public function __construct() {
-            $this->table = SenadorTable::all();
+            
         }
   
   	    public function indexAction(){
-            return array('senadores' => $this->table);
+              return array("senadores" => SenadorTable::all());
   	    }
         
         public function showAction(){
            $codigo = filter_input(INPUT_GET, "parlamentar");
-           $parlamentar = $this->table[$codigo];
+           $parlamentar = SenadorTable::find($codigo);
            return array('parlamentar' => $parlamentar);
         }
         

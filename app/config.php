@@ -6,4 +6,4 @@ define ('HOST', "localhost");
 define('DBNAME',"senadores");
 define('USER',"root");
 define('PSWD',"root");
-define('CHARSET',"UTF-8");
+define('CHARSET',"SET NAMES UTF8");
