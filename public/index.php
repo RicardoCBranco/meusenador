@@ -23,7 +23,7 @@
         </div>
         <div class="links">
             <a href="">Home</a>
-            <a href="">Contato</a>
+            <a href="/contato">Contato</a>
             <a href="" onload="disabled" data-toggle="modal" data-target="#modalSobre">Sobre</a>
         </div>
         </nav>
@@ -86,13 +86,19 @@
                         <!-- Corpo -->
                         <div class="modal-body" id="modal">
                         <h5>Meu Senador</h5>
-                        <p>Site desenvolvido para acompanhamento do mandato dos parlamentares eleitos
-                        para ocupar o cargo de Senador.</p>
+                        <p>Somos um projeto de tecnologia com a finalidade de compartilhar informações
+                        acessíveis a qualquer pessoa sobre gastos de senadores em exercício do mandato.
+                        Meu Senador trata da análise dos gastos da cota para exercício da atividade parlamentar
+                        dos senadores eleitos através do acesso dos dados abertos do Senado Federal e do tratamento
+                        desses dados de forma a se tornarem dados facilmente acessados e interpretados pela população.
+                        A idéia do sistema surgiu através do envolvimento de três discentes do curso de Licenciatura
+                        da Computação da Universidade Federal Rural de Pernambuco com a disciplina de projeto de desenvolvimento
+                        de software, como forma de desenvolver um sistema para fiscalizar gastos públicos.</p>
                         <span>v.1.1.0</span>
                         <ul>Autores:
-                        <li>Antonio Ricardo Andrade Castelo Branco</li>
-                        <li>Wellington</li>
-                        <li>Verônica</li>
+                        <li>Antonio Ricardo A Castelo Branco</li>
+                        <li>Wellington Eugênio</li>
+                        <li>Verônica M C Santos</li>
                         </ul>
                         </div>
                         <!-- Rodapé -->
