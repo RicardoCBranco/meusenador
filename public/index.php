@@ -51,6 +51,24 @@
                            data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-success">
                         </form>
                     </div>
+                    <!-- Tabela de Gastos -->
+                    <div class="col-md-8">
+                    <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>Senador</th><th>Gastos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($dados['gastos'] as $row): ?>
+                            <tr>
+                                <td><?=$row->senador?></td><td>R$ <?=\number_format($row->soma,2,",",".")?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                    </table>
+                    </div>
+                    <!-- Fim da tabela de gastos -->
                 </div>
             </div>
             <!-- Estrutura do modal -->

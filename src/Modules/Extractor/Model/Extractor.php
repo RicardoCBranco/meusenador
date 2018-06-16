@@ -2,6 +2,8 @@
 namespace Ufrpe\Senadores\Modules\Extractor\Model;
 
 class Extractor{
+    private $senador;
+
     public function __construct(){}
 
     public function insertSenadores(){
@@ -60,14 +62,55 @@ class Extractor{
     }
 
     /**
+     * Cria o insert dos gastos
+     */
+    public function insertGastos(){
+        $i = 0;
+
+        echo "Inicio de gastos".\date("H:i:s")."<br>";
+        $this->criarTabelaGastos();
+
+        $sql = "INSERT INTO gastos(codigo_parlamentar,ano,mes,senador,tipo_despesa,cnpj_cpf,
+        fornecedor,documento,data,detalhamento,valor_reembolsado) VALUES";
+        foreach($this->getGastos('2018') as $linha){
+        
+            if(isset($this->senador) || \mb_strtoupper($this->senador->nome_parlamentar) !== \utf8_encode($linha[2])){
+                $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::search(\utf8_encode($linha[2]));
+            }
+            $codigo = ($this->senador !== FALSE)? $this->senador->codigo_parlamentar:0;
+            $sql .= "(";
+            $sql .= "'".$codigo."',";
+            $sql .= "'".$linha[0]."',";
+            $sql .= "'".$linha[1]."',";
+            $sql .= "'".\utf8_encode($linha[2])."',";
+            $sql .= "'".\str_replace("'","",\utf8_encode($linha[3]))."',";
+            $sql .= "'".$linha[4]."',";
+            $sql .= "'".\str_replace("'","",\utf8_encode($linha[5]))."',";
+            $sql .= "'".$linha[6]."',";
+            $sql .= "'".\date("Y-m-d",\strtotime($linha[7]))."',";
+            $sql .= "'".\str_replace(["'",'"'],"",\utf8_encode($linha[8]))."',";
+            $sql .= "'".\str_replace(",",".",$linha[9])."'";
+            $sql .= "),";
+
+            $i++;
+            if($i % 100 == 0){
+                echo "estou na linha $i<br>";
+            } 
+        }
+        $sql = substr($sql,0, -1).";";
+        $this->executeComando($sql);
+        echo date("H:i:s")."Fim de gastos<hr>";
+    }
+
+    /**
      * Insere os dados sobre gastos dos parlamentares em uma tabela no banco de dados
      * @param $ano inteiro contendo o ano procurado
      */
-    private function insertGastos($ano){
-        $csv = fopen("http://www.senado.gov.br/transparencia/LAI/verba/2018.csv",'r');
+    private function getGastos($ano){
+        $csv = fopen("http://www.senado.gov.br/transparencia/LAI/verba/$ano.csv",'r');
         $array = [];
         while (($lin = fgetcsv($csv,4096,";")) !== FALSE){
-            if(count($lin) == 10 && mb_strtoupper(utf8_encode($lin[2])) == mb_strtoupper($nome))  {
+            if(count($lin) == 10)  {
                 $array[] = $lin;
             }
         }
@@ -86,7 +129,7 @@ class Extractor{
             $stmt = $con->prepare($sql);
             $stmt->execute();
         }catch(\PDOException $e){
-            throw new \Exception($e);
+            echo "Error:".$e->getMessage();
         }
     }
 
@@ -99,15 +142,15 @@ class Extractor{
         $sql .= "senador varchar(150),";
         $sql .= "ano int,";
         $sql .= "mes int,";
-        $sql .= "tipo_despesa varchar(250),";
+        $sql .= "tipo_despesa longtext,";
         $sql .= "cnpj_cpf varchar(20),";
         $sql .= "fornecedor varchar(150),";
         $sql .= "documento varchar(50) NULL,";
         $sql .= "data date,";
-        $sql .= "detalhamento varchar(150),";
+        $sql .= "detalhamento longtext,";
         $sql .= "valor_reembolsado float(7,2)";
         $sql .= ");";
-        $this->executeComando();
+        $this->executeComando($sql);
     }
 
     /**
@@ -116,12 +159,12 @@ class Extractor{
     private function criarTabelaSenadores(){
         $sql = "CREATE TABLE senadores(";
         $sql .= "codigo_parlamentar int NOT NULL PRIMARY KEY,";
-        $sql .= "nome_parlamentar varchar(150),";
+        $sql .= "nome_parlamentar varchar(250),";
         $sql .= "nome_completo_parlamentar varchar(250),";
         $sql .= "url_foto_parlamentar varchar(250),";
         $sql .= "url_pagina_parlamentar varchar(250),";
         $sql .= "email_parlamentar varchar(250),";
-        $sql .= "sigla_partido_parlamentar varchar(250),";
+        $sql .= "sigla_partido_parlamentar varchar(50),";
         $sql .= "uf_parlamentar varchar(2),";
         $sql .= "sexo_parlamentar varchar(10)";
         $sql .= ");";

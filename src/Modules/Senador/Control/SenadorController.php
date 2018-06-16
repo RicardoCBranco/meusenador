@@ -2,6 +2,7 @@
 namespace Ufrpe\Senadores\Modules\Senador\Control;
 
 use \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
+use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
 
   class SenadorController  {
       private $table;
@@ -11,7 +12,7 @@ use \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
         }
   
   	    public function indexAction(){
-              return array("senadores" => SenadorTable::all());
+              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::all());
   	    }
         
         public function showAction(){

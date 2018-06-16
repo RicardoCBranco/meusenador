@@ -24,7 +24,10 @@ class SenadorTable {
         return $stmt->fetch(\PDO::FETCH_OBJ);
     }
     
-    public static function gastos($nome){
-        
+    public static function search($nome){
+        $conn = Connection::getInstance();
+        $stmt = $conn->prepare("SELECT * FROM senadores WHERE nome_parlamentar LIKE '%$nome%';");
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_OBJ);
     }
 }

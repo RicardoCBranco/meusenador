@@ -6,7 +6,7 @@ class ExtractorController{
 
     public function inserts(){
         $ext = new \Ufrpe\Senadores\Modules\Extractor\Model\Extractor();
-        $ext->insertSenadores();
+        //$ext->insertSenadores();
         $ext->insertGastos();
     }
 }
