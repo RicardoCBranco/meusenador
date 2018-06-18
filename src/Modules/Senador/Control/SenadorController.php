@@ -12,18 +12,13 @@ use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
         }
   
   	    public function indexAction(){
-              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::all());
+              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::topTen());
   	    }
         
         public function showAction(){
            $codigo = filter_input(INPUT_GET, "parlamentar");
            $parlamentar = SenadorTable::find($codigo);
            return array('parlamentar' => $parlamentar);
-        }
-        
-        public function gastosAction(){
-            $gastos = SenadorTable::gastos(filter_input(INPUT_GET,"nome"));
-            return array('gastos' => $gastos);
         }
 
   

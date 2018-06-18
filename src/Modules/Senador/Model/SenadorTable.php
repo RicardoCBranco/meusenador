@@ -14,20 +14,22 @@ class SenadorTable {
         $conn = Connection::getInstance();
         $stmt = $conn->prepare("SELECT * FROM senadores ORDER BY nome_parlamentar");
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        return $stmt->fetchAll();
     }
 
     public static function find($id){
         $conn = Connection::getInstance();
         $stmt = $conn->prepare("SELECT * FROM senadores WHERE codigo_parlamentar LIKE ?");
         $stmt->execute(array($id));
-        return $stmt->fetch(\PDO::FETCH_OBJ);
+        return $stmt->fetch();
     }
     
     public static function search($nome){
-        $conn = Connection::getInstance();
-        $stmt = $conn->prepare("SELECT * FROM senadores WHERE nome_parlamentar LIKE '%$nome%';");
+        $query = "SELECT * FROM senadores WHERE nome_parlamentar LIKE '%$nome%'";
+        $con = Connection::getInstance();
+        $stmt = $con->prepare($query);
         $stmt->execute();
-        return $stmt->fetch(\PDO::FETCH_OBJ);
+        return $stmt->fetch();
+
     }
 }

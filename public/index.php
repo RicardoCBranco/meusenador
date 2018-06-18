@@ -39,11 +39,11 @@
                                 id="parlamentares" onchange="dados(this.id, 'modal')">
                             <option>Selecione um político</option>
                             <?php foreach ($dados['senadores'] as $opt): ?>
-                                <option value="<?= $opt->codigo_parlamentar ?>"
-                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt->codigo_parlamentar): ?>
+                                <option value="<?= $opt['0'] ?>"
+                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt['0']): ?>
                                             selected
                                         <?php endif; ?>
-                                        ><?= $opt->nome_parlamentar ?></option>
+                                        ><?= $opt['1'] ?></option>
                                     <?php endforeach; ?>
                             </select>
                             </div>
@@ -53,6 +53,7 @@
                     </div>
                     <!-- Tabela de Gastos -->
                     <div class="col-md-8">
+                    <h5>Tabela de Gastos - Atualizado até 17/06/2018</h5><a href="gastos/show.php">Listar todos</a>
                     <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -62,10 +63,15 @@
                     <tbody>
                         <?php foreach($dados['gastos'] as $row): ?>
                             <tr>
-                                <td><?=$row->senador?></td><td>R$ <?=\number_format($row->soma,2,",",".")?></td>
+                                <td><a href="gastos/?id=<?=$row[0]?>"><?=$row[1]?></a></td><td>R$ <?=\number_format($row[3],2,",",".")?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">Fonte: Senado Federal (http:www.senado.gov.br/transparencia)</td>
+                        </tr>
+                    </tfoot>
                     </table>
                     </div>
                     <!-- Fim da tabela de gastos -->

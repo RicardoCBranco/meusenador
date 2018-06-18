@@ -6,21 +6,20 @@ $parlamentar = $dados['parlamentar'];
 ?>
 <div class="row">
     <div class="col-sm-4">
-        <img src="<?=$parlamentar->url_foto_parlamentar?>"
+        <img src="<?=$parlamentar[3]?>"
             class="img-thumbnail" style="width:100%">
     </div>
     <div class="col-lg-6">
-        <a href="gastos/?nome=<?=$parlamentar->nome_parlamentar?>">
+        <a href="gastos/?id=<?=$parlamentar[0]?>">
     <img class="img-fluid img-thumbnail" src="img/Dinheiro1.png"
          title="Gastos" width="50px" height="50px">
     </a>
     </div>
     <div class="col-lg-10">
-  <h3><?=$parlamentar->nome_parlamentar?></h3>
-<h4><?=$parlamentar->sigla_partido_parlamentar." - "
-        .$parlamentar->uf_parlamentar?></h4>  
+  <h3><?=$parlamentar[1]?></h3>
+<h4><?=$parlamentar[6]." - "
+        .$parlamentar[7]?></h4>  
 </div>
-    
 </div>
 
 

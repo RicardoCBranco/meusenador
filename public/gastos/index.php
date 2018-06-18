@@ -11,19 +11,19 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <?php
             include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
-            $ctrl = new \Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
-            $dados = $ctrl->gastosAction();
+            $ctrl = new \Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
+            $dados = $ctrl->indexAction();
             $soma = 0;
         ?>
     </head>
     <body>
         <div class="container container-fluid">
             <div class="content">
-                <h2>Gastos do Senador <?=filter_input(INPUT_GET,"nome")?></h2><a href="/" class="btn btn-success">Home</a>
-                <table class="table table-hover">
+                <h2>Gastos do Senador <?=$dados['senador'][2]?></h2><a href="/" class="btn btn-success">Home</a>
+                <table class="table table-hover table-responsive">
                     <thead>
                         <tr>
-                            <th>Data</th>
+                            <th>Data (Mês/Ano)</th>
                             <th>Tipo de Despesa</th><th>CNPJ/CPF</th>
                             <th>Fornecedor</th>
                             <th>Detalhamento</th>
@@ -33,13 +33,13 @@ and open the template in the editor.
                     <tbody>
                         <?php foreach($dados['gastos'] as $row):?>
                             <tr>
-                                <td><?=$row[7]?></td>
-                                <td><?=utf8_encode($row[3])?></td>
+                                <td><?=$row[3]."/".$row[2]?></td>
                                 <td><?=$row[4]?></td>
-                                <td><?=utf8_encode($row[5])?></td>
-                                <td><?=utf8_encode($row[8])?></td>
-                                <td>R$ <?=$row[9]?></td>
-                                <?php $soma += floatval(str_replace(",",".",$row[9])); ?>
+                                <td><?=$row[5]?></td>    
+                                <td><?=$row[6]?></td>
+                                <td><?=$row[9]?></td>
+                                <td>R$ <?=\number_format($row[10],2,",",".")?></td>
+                                <?php $soma += floatval(str_replace(",",".",$row[10])); ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

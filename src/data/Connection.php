@@ -15,11 +15,7 @@ class Connection{
 
     public static function getInstance(){
         if(!isset(self::$instance)){
-            $options = array(\PDO::MYSQL_ATTR_INIT_COMMAND => CHARSET);
-            self::$instance = new \PDO(sprintf("%s:host=%s;dbname=%s",
-                    DRIVER,HOST,DBNAME),USER,PSWD,$options);
-            self::$instance->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
-                    
+            self::$instance = new \PDO("mysql:host=".HOST.";dbname=".DBNAME,USER,PSWD);                    
         }
         return self::$instance;
     }

@@ -64,20 +64,22 @@ class Extractor{
     /**
      * Cria o insert dos gastos
      */
-    public function insertGastos(){
+    public function insertGastos($ano){
         $i = 0;
 
         echo "Inicio de gastos".\date("H:i:s")."<br>";
         $this->criarTabelaGastos();
 
-        $sql = "INSERT INTO gastos(codigo_parlamentar,ano,mes,senador,tipo_despesa,cnpj_cpf,
-        fornecedor,documento,data,detalhamento,valor_reembolsado) VALUES";
-        foreach($this->getGastos('2018') as $linha){
-        
-            if(isset($this->senador) || \mb_strtoupper($this->senador->nome_parlamentar) !== \utf8_encode($linha[2])){
-                $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::search(\utf8_encode($linha[2]));
+        foreach($this->getGastos($ano) as $linha){
+
+            if(\mb_strtoupper($this->senador[1]) 
+            !== \utf8_encode($linha[2]) || !isset($this->senador)){
+                $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::
+                search(\utf8_encode($linha[2]));
             }
-            $codigo = ($this->senador !== FALSE)? $this->senador->codigo_parlamentar:0;
+            $sql = "INSERT INTO gastos(codigo_parlamentar,ano,mes,senador,tipo_despesa,cnpj_cpf,
+                fornecedor,documento,data,detalhamento,valor_reembolsado) VALUES";
+            $codigo = ($this->senador !== FALSE)? $this->senador[0]:0;
             $sql .= "(";
             $sql .= "'".$codigo."',";
             $sql .= "'".$linha[0]."',";
@@ -90,15 +92,13 @@ class Extractor{
             $sql .= "'".\date("Y-m-d",\strtotime($linha[7]))."',";
             $sql .= "'".\str_replace(["'",'"'],"",\utf8_encode($linha[8]))."',";
             $sql .= "'".\str_replace(",",".",$linha[9])."'";
-            $sql .= "),";
-
+            $sql .= ");";
+            $this->executeComando($sql);
             $i++;
             if($i % 100 == 0){
                 echo "estou na linha $i<br>";
             } 
         }
-        $sql = substr($sql,0, -1).";";
-        $this->executeComando($sql);
         echo date("H:i:s")."Fim de gastos<hr>";
     }
 
@@ -128,8 +128,8 @@ class Extractor{
             $con = \Ufrpe\Senadores\Data\Connection::getInstance();
             $stmt = $con->prepare($sql);
             $stmt->execute();
-        }catch(\PDOException $e){
-            echo "Error:".$e->getMessage();
+        }catch(\mysqli_sql_exception $e){
+            die($e->getMessage());
         }
     }
 
@@ -137,7 +137,7 @@ class Extractor{
      * Cria no banco de dados a tabela de gastos
      */
     private function criarTabelaGastos(){
-        $sql = "CREATE TABLE gastos(";
+        $sql = "CREATE TABLE IF NOT EXISTS gastos(";
         $sql .= "codigo_parlamentar int null,";
         $sql .= "senador varchar(150),";
         $sql .= "ano int,";
@@ -157,7 +157,7 @@ class Extractor{
      * Cria no banco de dados a tabela de senadores
      */
     private function criarTabelaSenadores(){
-        $sql = "CREATE TABLE senadores(";
+        $sql = "CREATE TABLE IF NOT EXISTS senadores(";
         $sql .= "codigo_parlamentar int NOT NULL PRIMARY KEY,";
         $sql .= "nome_parlamentar varchar(250),";
         $sql .= "nome_completo_parlamentar varchar(250),";
