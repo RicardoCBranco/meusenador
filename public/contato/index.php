@@ -8,11 +8,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" 
          crossorigin="anonymous" />
+         <?php
+        require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
+        $ctrl = new Ufrpe\Senadores\Modules\Contato\Control\ContatoController();
+        $dados = $ctrl->indexAction();
+        ?>
 </head>
 <body>
 
     <div class="content">
         <div class="container">
+        <?php if(isset($dados['mensagem'])): ?>
+        <div class = "alert alert-success">
+        <?=$dados['mensagem']?>
+        </div>
+        <?php endif; ?>
         <div class="row right">
         <div class="col-sm-12">
         <a href="/" class="btn btn-success">Home</a>
