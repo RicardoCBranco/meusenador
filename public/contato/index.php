@@ -15,24 +15,25 @@
         ?>
 </head>
 <body>
-
     <div class="content">
         <div class="container">
+        <div class="row">
+                <div class="col-md-11">
+                </div>
+                <div class="col-md-1">
+                    <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+                </div>
+            </div>
         <?php if(isset($dados['mensagem'])): ?>
         <div class = "alert alert-success">
         <?=$dados['mensagem']?>
         </div>
         <?php endif; ?>
-        <div class="row right">
-        <div class="col-sm-12">
-        <a href="/" class="btn btn-success">Home</a>
-        </div>
-        </div>
-        <div class="row justify-content-center"> 
+        <div class="row justify-content-center">
             <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Contato
+                    <h4>Contato</h4>
                 </div>
                 <div class="card-body">
                 <form class="form-sign" method="post" action="">

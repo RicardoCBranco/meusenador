@@ -19,7 +19,14 @@ and open the template in the editor.
     <body>
         <div class="container container-fluid">
             <div class="content">
-                <h2>Gastos do Senador <?=$dados['senador'][2]?></h2><a href="/" class="btn btn-success">Home</a>
+                <div class="row">
+                    <div class="col-md-11">
+                        <h2>Gastos do Senador <?=$dados['senador']['nome_completo_parlamentar']?></h2>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+                    </div>
+                </div>
                 <table class="table table-hover table-responsive">
                     <thead>
                         <tr>

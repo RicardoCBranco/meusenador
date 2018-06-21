@@ -21,6 +21,10 @@ use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
            return array('parlamentar' => $parlamentar);
         }
 
+        public function estadosAction(){
+          $sigla = filter_input(INPUT_GET,"uf");
+          return array("senadores" => SenadorTable::getEstado($sigla));
+        }
   
 }
 

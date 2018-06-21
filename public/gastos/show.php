@@ -15,7 +15,14 @@
 <body>
     <div class="container">
         <div class="content">
-            <h3>Relação dos Parlamentares por Gastos nos últimos 08 anos</h3><a href="/" class="btn btn-success">Home</a>
+        <div class="row">
+                    <div class="col-md-11">
+                        <h2>Relação dos Parlamentares por Gastos nos últimos anos</h2>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+                    </div>
+                </div>
             <table class="table table-condensed table-hover">
                 <thead>
                     <tr>
