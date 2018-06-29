@@ -68,7 +68,6 @@ class Extractor{
         $i = 0;
 
         echo "Inicio de gastos".\date("H:i:s")."<br>";
-        $this->criarTabelaGastos();
 
         foreach($this->getGastos($ano) as $linha){
 
@@ -77,8 +76,8 @@ class Extractor{
                 $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::
                 search(\utf8_encode($linha[2]));
             }
-            $sql = "INSERT INTO gastos(codigo_parlamentar,ano,mes,senador,tipo_despesa,cnpj_cpf,
-                fornecedor,documento,data,detalhamento,valor_reembolsado) VALUES";
+            $sql = "INSERT INTO gastos(`codigo_parlamentar`,`ano`,`mes`,`senador`,`tipo_despesa`,`cnpj_cpf`,
+                `fornecedor`,`documento`,`data`,`detalhamento`,`valor_reembolsado`) VALUES";
             $codigo = ($this->senador !== FALSE)? $this->senador[0]:0;
             $sql .= "(";
             $sql .= "'".$codigo."',";
@@ -89,7 +88,9 @@ class Extractor{
             $sql .= "'".$linha[4]."',";
             $sql .= "'".\str_replace("'","",\utf8_encode($linha[5]))."',";
             $sql .= "'".$linha[6]."',";
-            $sql .= "'".\date("Y-m-d",\strtotime($linha[7]))."',";
+            //Criando data
+            $data = \DateTime::createFromFormat("d/m/Y",$linha[7]);
+            $sql .= "'".$data->format("Y-m-d")."',";
             $sql .= "'".\str_replace(["'",'"'],"",\utf8_encode($linha[8]))."',";
             $sql .= "'".\str_replace(",",".",$linha[9])."'";
             $sql .= ");";
@@ -99,7 +100,12 @@ class Extractor{
                 echo "estou na linha $i<br>";
             } 
         }
-        echo date("H:i:s")."Fim de gastos<hr>";
+        echo date("H:i:s")."Fim de gastos $ano<hr>";
+    }
+
+    public function deleteGastos(){
+        $sql = "DELETE FROM gastos;";
+        $this->executeComando($sql);
     }
 
     /**

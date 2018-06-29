@@ -26,14 +26,15 @@
             <table class="table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th>Senador</th><th>Gastos (R$)</th>
+                        <th>Senador</th><th>Média de Gastos Diários (R$)</th><th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($dados['gastos'] as $row): ?>
                     <tr>
-                        <td><?=$row[1]?></td>
-                        <td><?=\number_format($row[3],2,",",".")?></td>
+                        <td><?=$row['senador']?></td>
+                        <td><?=\number_format($row['soma'],2,",",".")?></td>
+                        <td><a href="/gastos?id=<?=$row['codigo_parlamentar']?>">Gastos</a></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

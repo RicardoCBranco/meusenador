@@ -9,9 +9,10 @@ class ExtractorController{
 
         $ext = new \Ufrpe\Senadores\Modules\Extractor\Model\Extractor();
         //$ext->insertSenadores();
+        $ext->deleteGastos();
         for($i = $ano; $i >= $ano - 8; $i--){
             $ext->insertGastos($i);
         }
-        
+        echo "Fim da Execução do Extractor";
     }
 }

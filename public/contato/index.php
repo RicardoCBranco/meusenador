@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" 
          crossorigin="anonymous" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
          <?php
         require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
         $ctrl = new Ufrpe\Senadores\Modules\Contato\Control\ContatoController();
@@ -53,6 +54,7 @@
                     <label for="mensagem" class="sr">MENSAGEM</label>
                     <textarea name="mensagem" class="form-control"></textarea>
                 </div>
+                <div class="g-recaptcha" data-sitekey="6LcWEmEUAAAAACK5YWNlF5H6jwF76SjY44ku3VZF"></div>
                 <input type="submit" value="Enviar" class="button btn-success">
             </form>
                 </div>

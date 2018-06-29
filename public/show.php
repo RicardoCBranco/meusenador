@@ -18,9 +18,8 @@ $parlamentar = $dados['parlamentar'];
         <span><b>Nome Completo: </b><?=$parlamentar['nome_completo_parlamentar']?></span><br>
         <span><b>Email: </b><?=$parlamentar['email_parlamentar']?></span><br>
         <span><b>Homepage: </b><a href="<?=$parlamentar['url_pagina_parlamentar']?>" target="__blank">Link</a></span><br>
-        <span></span><b>Gastos: </b>R$ <a href="/gastos/?id=<?=$parlamentar['codigo_parlamentar']?>">
-        <?=number_format($parlamentar['gastos'],2,",",".")?></span>
-        </a>
+        <span><b>Gastos Médios por dia: </b>R$ <?=number_format($parlamentar['gastos'],2,",",".")?></span><br>
+        <a href="/gastos/?id=<?=$parlamentar['codigo_parlamentar']?>">Detalhamento dos gastos</a>
     </div>
 </div>
 

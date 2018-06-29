@@ -48,7 +48,8 @@
                 Email: <?=$ln['email_parlamentar']?><br>
                 Partido: <?=$ln['sigla_partido_parlamentar']?><br>
                 Homepage: <a href="<?=$ln['url_pagina_parlamentar']?>">Link</a><br>
-                Gastos:R$ <a href="../gastos/?id=<?=$ln['codigo_parlamentar']?>"><?=number_format($ln['gastos'],2,",",".")?></a>
+                Gasto Médio por dia:R$ <?=number_format($ln['gastos'],2,",",".")?><br>
+                <a href="../gastos/?id=<?=$ln['codigo_parlamentar']?>">Detalhamento dos gastos</a>
             </td>
     </tr>
     <?php endforeach; ?>

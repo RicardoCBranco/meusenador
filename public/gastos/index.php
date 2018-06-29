@@ -21,10 +21,22 @@ and open the template in the editor.
             <div class="content">
                 <div class="row">
                     <div class="col-md-11">
-                        <h2>Gastos do Senador <?=$dados['senador']['nome_completo_parlamentar']?></h2>
+                        <h2><?=$dados['senador']['nome_parlamentar']?></h2>
                     </div>
                     <div class="col-md-1">
                         <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+                    </div>
+                    <hr>
+                    <div class=col-md-2>
+                        <image src="<?=$dados['senador']['url_foto_parlamentar']?>" title="foto.jpg"
+                        class="image img-thumbnail">
+                    </div>
+                    <div class="col-md-8">
+                        Nome: <?=$dados['senador']['nome_completo_parlamentar']?><br>
+                        Partido: <?=$dados['senador']['sigla_partido_parlamentar']?><br>
+                        UF: <?=$dados['senador']['uf_parlamentar']?><br>
+                        Email: <?=$dados['senador']['email_parlamentar']?><br>
+                        Gasto médio por dia: R$ <?=\number_format($dados['senador']['gastos'],2,",",".")?><br>
                     </div>
                 </div>
                 <table class="table table-hover table-responsive">
@@ -40,12 +52,12 @@ and open the template in the editor.
                     <tbody>
                         <?php foreach($dados['gastos'] as $row):?>
                             <tr>
-                                <td><?=$row[3]."/".$row[2]?></td>
-                                <td><?=$row[4]?></td>
-                                <td><?=$row[5]?></td>    
-                                <td><?=$row[6]?></td>
-                                <td><?=$row[9]?></td>
-                                <td>R$ <?=\number_format($row[10],2,",",".")?></td>
+                                <td><?=\date("d/m/Y",\strtotime($row['data']))?></td>
+                                <td><?=$row['tipo_despesa']?></td>
+                                <td><?=$row['cnpj_cpf']?></td>    
+                                <td><?=$row['fornecedor']?></td>
+                                <td><?=$row['detalhamento']?></td>
+                                <td>R$ <?=\number_format($row['valor_reembolsado'],2,",",".")?></td>
                                 <?php $soma += floatval(str_replace(",",".",$row[10])); ?>
                             </tr>
                         <?php endforeach; ?>

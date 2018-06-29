@@ -51,24 +51,26 @@
                     <!-- Fim do Formulário -->
 
                     <!-- Tabela de Gastos -->
-                    <div class="col-md-5">
-                    <h5>Tabela de Gastos - Atualizado até 17/06/2018</h5><a href="gastos/show.php">Listar todos</a>
-                    <table class="table table-striped table-sm">
+                    <div class="col-md-6">
+                    <h5>Tabela de Gastos - Atualizado até 27/06/2018</h5><a href="gastos/show.php">Listar todos</a>
+                    <table class="table table-responsive-sm table-striped">
                     <thead>
                         <tr>
-                            <th>Senador</th><th>Gastos</th>
+                            <th>Senador</th><th>Partido</th><th>Média de Gastos Diários (R$)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($dados['gastos'] as $row): ?>
                             <tr>
-                                <td><a href="gastos/?id=<?=$row[0]?>"><?=$row[1]?></a></td><td>R$ <?=\number_format($row[3],2,",",".")?></td>
+                                <td><a href="gastos/?id=<?=$row['codigo_parlamentar']?>"><?=$row['nome_parlamentar']?></a></td>
+                                <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
+                                <td><?=\number_format($row['soma'],2,",",".")?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">Fonte: Senado Federal (http:www.senado.gov.br/transparencia)</td>
+                            <td colspan="3">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)</td>
                         </tr>
                     </tfoot>
                     </table>
@@ -76,7 +78,7 @@
                     <!-- Fim da tabela de gastos -->
 
                   <!-- Mapa -->
-        <div class="col-md-5">
+        <div class="col-md-4    ">
 
 <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enable-background="new 0 0 450 460" xml:space="preserve">
 
