@@ -5,6 +5,7 @@
         require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
         $dados = $ctrl->indexAction();
+        $i = 0;
         ?>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
@@ -37,10 +38,10 @@
                             <option>Selecione um político</option>
                             <?php foreach ($dados['senadores'] as $opt): ?>
                                 <option value="<?= $opt['0'] ?>"
-                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt['0']): ?>
+                                <?php if (filter_input(INPUT_POST, "parlamentares") == $opt['codigo_parlamentar']): ?>
                                             selected
                                         <?php endif; ?>
-                                        ><?= $opt['1'] ?></option>
+                                        ><?= $opt['nome_parlamentar'] ?></option>
                                     <?php endforeach; ?>
                             </select>
                             </div>
@@ -51,17 +52,21 @@
                     <!-- Fim do Formulário -->
 
                     <!-- Tabela de Gastos -->
-                    <div class="col-md-6">
-                    <h5>Tabela de Gastos - Atualizado até 27/06/2018</h5><a href="gastos/show.php">Listar todos</a>
-                    <table class="table table-responsive-sm table-striped">
-                    <thead>
+                    <div class="col-md-8">
+                    <a href="gastos/show.php">Listar todos</a>
+                    <table class="table table-striped table-condensed">
+                    <thead class="thead-dark">
                         <tr>
-                            <th>Senador</th><th>Partido</th><th>Média de Gastos Diários (R$)</th>
+                            <th>Rank</th>
+                            <th>Senador</th>
+                            <th>Partido</th>
+                            <th>Gastos/Dia(R$)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($dados['gastos'] as $row): ?>
                             <tr>
+                                <td><?=++$i?>º</td>
                                 <td><a href="gastos/?id=<?=$row['codigo_parlamentar']?>"><?=$row['nome_parlamentar']?></a></td>
                                 <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
                                 <td><?=\number_format($row['soma'],2,",",".")?></td>
@@ -70,7 +75,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)</td>
+                            <td colspan="3">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)<br> 
+                            Dados atualizados até 27/06/2018</td>
                         </tr>
                     </tfoot>
                     </table>
@@ -78,7 +84,7 @@
                     <!-- Fim da tabela de gastos -->
 
                   <!-- Mapa -->
-        <div class="col-md-4    ">
+        <div class="col-md-4">
 
 <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enable-background="new 0 0 450 460" xml:space="preserve">
 

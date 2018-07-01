@@ -17,7 +17,7 @@
         <div class="content">
         <div class="row">
                     <div class="col-md-11">
-                        <h2>Relação dos Parlamentares por Gastos nos últimos anos</h2>
+                        <h2>Relação dos Parlamentares por Gastos nos últimos 8 anos</h2>
                     </div>
                     <div class="col-md-1">
                         <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
@@ -26,13 +26,14 @@
             <table class="table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th>Senador</th><th>Média de Gastos Diários (R$)</th><th>Ação</th>
+                        <th>Senador</th><th>Partido</th><th>Média de Gastos Diários (R$)</th><th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($dados['gastos'] as $row): ?>
                     <tr>
                         <td><?=$row['senador']?></td>
+                        <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
                         <td><?=\number_format($row['soma'],2,",",".")?></td>
                         <td><a href="/gastos?id=<?=$row['codigo_parlamentar']?>">Gastos</a></td>
                     </tr>

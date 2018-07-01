@@ -10,9 +10,9 @@
          crossorigin="anonymous" />
     <script src='https://www.google.com/recaptcha/api.js'></script>
          <?php
-        require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
-        $ctrl = new Ufrpe\Senadores\Modules\Contato\Control\ContatoController();
-        $dados = $ctrl->indexAction();
+            require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
+            $ctrl = new Ufrpe\Senadores\Modules\Contato\Control\ContatoController();
+            $dados = $ctrl->indexAction();
         ?>
 </head>
 <body>
@@ -25,11 +25,7 @@
                     <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
                 </div>
             </div>
-        <?php if(isset($dados['mensagem'])): ?>
-        <div class = "alert alert-success">
         <?=$dados['mensagem']?>
-        </div>
-        <?php endif; ?>
         <div class="row justify-content-center">
             <div class="col-md-6">
             <div class="card">

@@ -22,7 +22,8 @@ class SenadorTable {
         $stmt = $conn->prepare("SELECT senadores.codigo_parlamentar, senadores.nome_parlamentar, 
         senadores.url_foto_parlamentar, senadores.url_pagina_parlamentar,
         senadores.email_parlamentar, senadores.sigla_partido_parlamentar, senadores.uf_parlamentar, 
-        senadores.nome_completo_parlamentar, 
+        senadores.nome_completo_parlamentar, (SELECT SUM(valor_reembolsado) FROM gastos WHERE 
+        gastos.codigo_parlamentar LIKE senadores.codigo_parlamentar) as total,
         (SELECT SUM(valor_reembolsado)/COUNT(DISTINCT data) FROM gastos WHERE
         gastos.codigo_parlamentar LIKE senadores.codigo_parlamentar) as gastos 
         FROM senadores WHERE codigo_parlamentar LIKE ?");

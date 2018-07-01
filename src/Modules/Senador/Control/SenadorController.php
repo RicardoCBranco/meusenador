@@ -12,7 +12,7 @@ use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
         }
   
   	    public function indexAction(){
-              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::topTen());
+              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::top(5));
   	    }
         
         public function showAction(){
