@@ -76,7 +76,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="3">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)<br> 
-                            Dados atualizados até 27/06/2018</td>
+                            Dados de 01/01/2011 e atualizados até 27/06/2018</td>
                         </tr>
                     </tfoot>
                     </table>
@@ -815,6 +815,7 @@
                         A idéia do sistema surgiu através do envolvimento de três discentes do curso de Licenciatura
                         da Computação da Universidade Federal Rural de Pernambuco com a disciplina de projeto de desenvolvimento
                         de software, como forma de desenvolver um sistema para fiscalizar gastos públicos.</p>
+                        <b>Versão</b><i>1.0.0</i>
                         <ul>Autores:
                         <li>Antonio Ricardo A Castelo Branco</li>
                         <li>Wellington Eugênio</li>
