@@ -28,6 +28,8 @@ PHP7 e MySQL
 5) Com o sistema rodando acesse o endereço "http://{seu site}/admin/insert" aguarde concluir a criação do banco de dados ao exibir a mensagem de término: "Fim da Execução do Extractor".
 ![Extractor](/public/img/tela5.png)
 
+6) Pronto tudo está configurando, bom uso!
+![Página Inicial](/public/img/tela6.png)
 
 ## Construído com
 
