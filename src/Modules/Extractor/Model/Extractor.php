@@ -148,6 +148,7 @@ class Extractor{
         $sql .= "senador varchar(150),";
         $sql .= "ano int,";
         $sql .= "mes int,";
+        $sql .= "categoria_gastos int,";
         $sql .= "tipo_despesa longtext,";
         $sql .= "cnpj_cpf varchar(20),";
         $sql .= "fornecedor varchar(150),";
@@ -175,5 +176,37 @@ class Extractor{
         $sql .= "sexo_parlamentar varchar(10)";
         $sql .= ");";
         $this->executeComando($sql);
+    }
+
+    public function criarTabelaCategorias(){
+         $create = "CREATE TABLE IF NOT EXISTS categorias(".
+                 "idcategoria INT NOT NULL AUTO_INCREMENT PRIMARY KEY,".
+                 "tipo_despesa longtext)";
+        $this->executeComando($create);
+
+        $sql = "SELECT DISTINCT tipo_despesa FROM gastos;";
+
+        $con = \Ufrpe\Senadores\Data\Connection::getInstance();
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+        $rs = $stmt->fetchAll();
+        foreach($rs as $ln){
+            $cmd = "INSERT INTO categorias(tipo_despesa) VALUES (?)";
+            $st = $con->prepare($cmd);
+            $st->execute([$ln['tipo_despesa']]);
+        }
+    }
+
+    public function atualizaTabelaGastos(){
+
+        $con = \Ufrpe\Senadores\Data\Connection::getInstance();
+        $stmt = $con->prepare("SELECT * FROM categorias");
+        $stmt->execute();
+        $categorias = $stmt->fetchAll();
+        foreach($categorias as $cat){
+            $upd = "UPDATE gastos SET categoria_gastos=".$cat['idcategoria'].
+                   " WHERE tipo_despesa LIKE '".$cat['tipo_despesa']."';";
+            $this->executeComando($upd);
+        }
     }
 }

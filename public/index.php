@@ -50,7 +50,9 @@
                         </form>
                     </div>
                     <!-- Fim do Formulário -->
-
+                    <div class="col-sm-2">
+                        <a href="categorias/" title="Categoria de Gastos"><image src="img/gastos.png" class="image img-fluid" alt="Gastos"></a>
+                    </div>
                     <!-- Tabela de Gastos -->
                     <div class="col-md-8">
                     <a href="gastos/show.php">Listar todos</a>
