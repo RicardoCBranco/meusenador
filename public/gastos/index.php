@@ -44,9 +44,15 @@ and open the template in the editor.
                         <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
                     </div>
                     <hr>
-                    <div class=col-md-2>
+                    <div class="col-md-2">
                         <image src="<?=$dados['senador']['url_foto_parlamentar']?>" title="foto.jpg"
                         class="image img-thumbnail">
+                    </div>
+                    <div class="col-md-2">
+                        <?php foreach($dados['premios'] as $premio):?>
+                            <img src="../img/<?=$premio['img']?>" class="image img-thumbnail"
+                            alt="<?=$premio['tipo_despesa']?>" title="<?=$premio['titulo']?> - <?=$premio['premio']?>">
+                        <?php endforeach; ?>
                     </div>
                     <div class="col-md-8">
                         <b>Nome: </b><?=$dados['senador']['nome_completo_parlamentar']?><br>

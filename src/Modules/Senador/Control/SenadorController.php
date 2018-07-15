@@ -3,6 +3,7 @@ namespace Ufrpe\Senadores\Modules\Senador\Control;
 
 use \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
 use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
+use \Ufrpe\Senadores\Modules\Premiacao\Model\PremiacaoTable;
 
   class SenadorController  {
       private $table;
@@ -18,7 +19,8 @@ use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
         public function showAction(){
            $codigo = filter_input(INPUT_GET, "parlamentar");
            $parlamentar = SenadorTable::find($codigo);
-           return array('parlamentar' => $parlamentar);
+           $premios = PremiacaoTable::find($codigo);
+           return array('parlamentar' => $parlamentar,'premios' => $premios);
         }
 
         public function estadosAction(){

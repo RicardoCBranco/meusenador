@@ -178,10 +178,25 @@ class Extractor{
         $this->executeComando($sql);
     }
 
+    private function criarTabelaPremiacao(){
+        $sql = "CREATE TABLE IF NOT EXISTS `premiacao` (
+            `codigo_parlamentar` int(11) DEFAULT NULL,
+            `categoria_gastos` int(11) DEFAULT NULL,
+            `colocacao` int(11) DEFAULT NULL,
+            `img` varchar(50) DEFAULT NULL,
+            KEY `FK_premiacao_senadores` (`codigo_parlamentar`),
+            KEY `FK_premiacao_categorias` (`categoria_gastos`),
+            CONSTRAINT `FK_premiacao_categorias` FOREIGN KEY (`categoria_gastos`) REFERENCES `categorias` (`idcategoria`),
+            CONSTRAINT `FK_premiacao_senadores` FOREIGN KEY (`codigo_parlamentar`) REFERENCES `senadores` (`codigo_parlamentar`)
+          );";
+          $this->executeComando($sql);
+    }
+
     public function criarTabelaCategorias(){
          $create = "CREATE TABLE IF NOT EXISTS categorias(".
                  "idcategoria INT NOT NULL AUTO_INCREMENT PRIMARY KEY,".
-                 "tipo_despesa longtext)";
+                 "tipo_despesa longtext,
+                 titulo varchar(50))";
         $this->executeComando($create);
 
         $sql = "SELECT DISTINCT tipo_despesa FROM gastos;";
@@ -208,5 +223,9 @@ class Extractor{
                    " WHERE tipo_despesa LIKE '".$cat['tipo_despesa']."';";
             $this->executeComando($upd);
         }
+    }
+
+    public function classificaPremiacoes(){
+        
     }
 }

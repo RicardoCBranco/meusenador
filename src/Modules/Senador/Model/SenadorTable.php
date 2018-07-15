@@ -24,7 +24,7 @@ class SenadorTable {
         senadores.email_parlamentar, senadores.sigla_partido_parlamentar, senadores.uf_parlamentar, 
         senadores.nome_completo_parlamentar, (SELECT SUM(valor_reembolsado) FROM gastos WHERE 
         gastos.codigo_parlamentar LIKE senadores.codigo_parlamentar) as total,
-        (SELECT SUM(valor_reembolsado)/COUNT(DISTINCT data) FROM gastos WHERE
+        (SELECT SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) FROM gastos WHERE
         gastos.codigo_parlamentar LIKE senadores.codigo_parlamentar) as gastos 
         FROM senadores WHERE codigo_parlamentar LIKE ?");
         $stmt->execute(array($id));
@@ -42,7 +42,7 @@ class SenadorTable {
     public static function getEstado($sigla){
         $con = Connection::getInstance();
         $stmt = $con->prepare("SELECT senadores.codigo_parlamentar, senadores.nome_parlamentar, senadores.url_foto_parlamentar, senadores.url_pagina_parlamentar,
-        senadores.email_parlamentar, senadores.sigla_partido_parlamentar, (SELECT SUM(valor_reembolsado)/COUNT(DISTINCT data) FROM gastos WHERE
+        senadores.email_parlamentar, senadores.sigla_partido_parlamentar, (SELECT SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) FROM gastos WHERE
         gastos.codigo_parlamentar LIKE senadores.codigo_parlamentar) as gastos FROM senadores WHERE senadores.uf_parlamentar LIKE ? 
         ORDER BY gastos DESC;");
         $stmt->execute(array($sigla));

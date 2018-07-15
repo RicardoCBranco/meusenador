@@ -7,7 +7,7 @@ class GastosTable{
     public static function top($limit){
         $conn = \Ufrpe\Senadores\Data\Connection::getInstance();
         $stmt = $conn->prepare("SELECT gastos.codigo_parlamentar, senador, ano, 
-        (SUM(valor_reembolsado)/COUNT(DISTINCT data)) as soma,  nome_parlamentar,
+        SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) as soma,  nome_parlamentar,
          sigla_partido_parlamentar, uf_parlamentar, (SUM(valor_reembolsado)) as total 
          FROM gastos INNER JOIN senadores ON (gastos.codigo_parlamentar = senadores.codigo_parlamentar)
           WHERE gastos.codigo_parlamentar <> 0 GROUP BY gastos.codigo_parlamentar 
@@ -20,7 +20,7 @@ class GastosTable{
         $conn = \Ufrpe\Senadores\Data\Connection::getInstance();
         $stmt = $conn->prepare("SELECT gastos.codigo_parlamentar, senador, ano, sigla_partido_parlamentar,
         uf_parlamentar, 
-        (SUM(valor_reembolsado)/COUNT(DISTINCT data)) as soma 
+        SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) as soma 
         FROM gastos 
         INNER JOIN senadores ON (senadores.codigo_parlamentar = gastos.codigo_parlamentar) 
         WHERE gastos.codigo_parlamentar <> 0 GROUP BY gastos.codigo_parlamentar 
