@@ -11,8 +11,10 @@ class CategoriaController{
     }
 
     public function detailAction(){
-        $id = filter_input(INPUT_GET,"id");
+        $inicio = !is_null(filter_input(INPUT_GET,"start"))?filter_input(INPUT_GET,"start"):0;
         $tbl = new CategoriaTable();
-        return array('detailpage' => $tbl->dados($id),'categoria' => $tbl->find($id));
+
+        return array('detailpage' => $tbl->dados($inicio),
+         'contador' => $tbl->totalDeRegistros());
     }   
 }

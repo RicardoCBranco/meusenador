@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista de Senadores</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
     <?php
         require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
+        $ctlPr = new \Ufrpe\Senadores\Modules\Premiacao\Control\PremiacaoController();
         $dados = $ctrl->estadosAction();
     ?>
 </head>
@@ -39,7 +39,8 @@
                 
             <td>
                 <div class="col-md-4">
-                    <image class="img-thumbnail" src="<?=$ln['url_foto_parlamentar']?>">
+                    <image class="img-thumbnail" src="<?=$ln['url_foto_parlamentar']?>"
+                    alt="<?=$ln['nome_parlamentar']?>">
                     
                 </div>
             </td>
@@ -49,7 +50,10 @@
                 Partido: <?=$ln['sigla_partido_parlamentar']?><br>
                 Homepage: <a href="<?=$ln['url_pagina_parlamentar']?>">Link</a><br>
                 Gasto Médio por dia:R$ <?=number_format($ln['gastos'],2,",",".")?><br>
-                <a href="../gastos/?id=<?=$ln['codigo_parlamentar']?>">Detalhamento dos gastos</a>
+                <a href="../gastos/?id=<?=$ln['codigo_parlamentar']?>">Detalhamento dos gastos</a><br>
+                <?php foreach($ctlPr->premioParlamentar($ln['codigo_parlamentar']) as $img):?>
+                <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" title="Premio de <?=$img['premio']?> por gasto com <?=$img['titulo']?>">
+                <?php endforeach; ?>
             </td>
     </tr>
     <?php endforeach; ?>

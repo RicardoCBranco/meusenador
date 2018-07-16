@@ -1,113 +1,14 @@
 <?php
 namespace Ufrpe\Senadores\Modules\Extractor\Model;
 
+use \Ufrpe\Senadores\Data\Connection;
+
 class Extractor{
     private $senador;
 
     public function __construct(){}
 
-    public function insertSenadores(){
-        /**
-         * Variáveis auxiliares da função
-         */
-        $array = array();
-        $i = 0;
-        /**
-         * Cria a tabela de senadores caso não exista
-         */
-        $this->criarTabelaSenadores();
-        /**
-         * Imprime o horário de inicio do processamento
-         */
-        echo "senadores:".date("H:i:s")."<br>";
-        /**
-         * Recupera os dados no site do senado
-         */
-        try {
-            $file = simplexml_load_file("http://legis.senado.leg.br/dadosabertos/senador/lista/atual");
-        } catch (\Exception $e) {
-            throw new \RuntimeException($e);
-        }
-        $lista = $file->Parlamentares;
-
-        /**
-         * Criar um insert com os dados recolhidos no site do senado
-         */
-        $sql = "INSERT INTO senadores (codigo_parlamentar,nome_parlamentar,nome_completo_parlamentar,
-        url_foto_parlamentar,url_pagina_parlamentar,email_parlamentar,sigla_partido_parlamentar,
-        uf_parlamentar,sexo_parlamentar) VALUES ";
-        foreach ($lista->Parlamentar as $xml) {
-            $i++;
-            $sql .= "(";
-            $sql .= "'".$xml->IdentificacaoParlamentar->CodigoParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->NomeParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->NomeCompletoParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->UrlFotoParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->UrlPaginaParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->EmailParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->SiglaPartidoParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->UfParlamentar."',";
-            $sql .= "'".$xml->IdentificacaoParlamentar->SexoParlamentar."'";
-            $sql .= "),";
-            if($i%10 == 0){
-                echo "Estou na linha $i <br>";
-            }
-        }
-        $sql = substr($sql,0,-1).";";
-        /**
-         * Inser os dados na tabela
-         */
-        $this->executeComando($sql);
-        echo date("H:i:s")."fim senadores <hr>";
-    }
-
-    /**
-     * Cria o insert dos gastos
-     */
-    public function insertGastos($ano){
-        $i = 0;
-
-        echo "Inicio de gastos".\date("H:i:s")."<br>";
-
-        foreach($this->getGastos($ano) as $linha){
-
-            if(\mb_strtoupper($this->senador[1]) 
-            !== \utf8_encode($linha[2]) || !isset($this->senador)){
-                $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::
-                search(\utf8_encode($linha[2]));
-            }
-            $sql = "INSERT INTO gastos(`codigo_parlamentar`,`ano`,`mes`,`senador`,`tipo_despesa`,`cnpj_cpf`,
-                `fornecedor`,`documento`,`data`,`detalhamento`,`valor_reembolsado`) VALUES";
-            $codigo = ($this->senador !== FALSE)? $this->senador[0]:0;
-            $sql .= "(";
-            $sql .= "'".$codigo."',";
-            $sql .= "'".$linha[0]."',";
-            $sql .= "'".$linha[1]."',";
-            $sql .= "'".\utf8_encode($linha[2])."',";
-            $sql .= "'".\str_replace("'","",\utf8_encode($linha[3]))."',";
-            $sql .= "'".$linha[4]."',";
-            $sql .= "'".\str_replace("'","",\utf8_encode($linha[5]))."',";
-            $sql .= "'".$linha[6]."',";
-            //Criando data
-            $data = \DateTime::createFromFormat("d/m/Y",$linha[7]);
-            $sql .= "'".$data->format("Y-m-d")."',";
-            $sql .= "'".\str_replace(["'",'"'],"",\utf8_encode($linha[8]))."',";
-            $sql .= "'".\str_replace(",",".",$linha[9])."'";
-            $sql .= ");";
-            $this->executeComando($sql);
-            $i++;
-            if($i % 100 == 0){
-                echo "estou na linha $i<br>";
-            } 
-        }
-        echo date("H:i:s")."Fim de gastos $ano<hr>";
-    }
-
-    public function deleteGastos(){
-        $sql = "DELETE FROM gastos;";
-        $this->executeComando($sql);
-    }
-
+    
     /**
      * Insere os dados sobre gastos dos parlamentares em uma tabela no banco de dados
      * @param $ano inteiro contendo o ano procurado
@@ -131,7 +32,7 @@ class Extractor{
      */
     private function executeComando($sql){
         try{
-            $con = \Ufrpe\Senadores\Data\Connection::getInstance();
+            $con = Connection::getInstance();
             $stmt = $con->prepare($sql);
             $stmt->execute();
         }catch(\mysqli_sql_exception $e){
@@ -192,16 +93,116 @@ class Extractor{
           $this->executeComando($sql);
     }
 
-    public function criarTabelaCategorias(){
-         $create = "CREATE TABLE IF NOT EXISTS categorias(".
-                 "idcategoria INT NOT NULL AUTO_INCREMENT PRIMARY KEY,".
-                 "tipo_despesa longtext,
-                 titulo varchar(50))";
-        $this->executeComando($create);
+    
+    private function criarTabelaCategorias(){
+        $create = "CREATE TABLE IF NOT EXISTS categorias(".
+                "idcategoria INT NOT NULL AUTO_INCREMENT PRIMARY KEY,".
+                "tipo_despesa longtext,
+                titulo varchar(50))";
+       $this->executeComando($create);
+   }
 
+   public function insertSenadores(){
+    /**
+     * Variáveis auxiliares da função
+     */
+    $array = array();
+    $i = 0;
+    /**
+     * Cria a tabela de senadores caso não exista
+     */
+    $this->criarTabelaSenadores();
+    /**
+     * Imprime o horário de inicio do processamento
+     */
+    echo "senadores:".date("H:i:s")."<br>";
+    /**
+     * Recupera os dados no site do senado
+     */
+    try {
+        $file = simplexml_load_file("http://legis.senado.leg.br/dadosabertos/senador/lista/atual");
+    } catch (\Exception $e) {
+        throw new \RuntimeException($e);
+    }
+    $lista = $file->Parlamentares;
+
+    /**
+     * Criar um insert com os dados recolhidos no site do senado
+     */
+    $sql = "INSERT INTO senadores (codigo_parlamentar,nome_parlamentar,nome_completo_parlamentar,
+    url_foto_parlamentar,url_pagina_parlamentar,email_parlamentar,sigla_partido_parlamentar,
+    uf_parlamentar,sexo_parlamentar) VALUES ";
+    foreach ($lista->Parlamentar as $xml) {
+        $i++;
+        $sql .= "(";
+        $sql .= "'".$xml->IdentificacaoParlamentar->CodigoParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->NomeParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->NomeCompletoParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->UrlFotoParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->UrlPaginaParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->EmailParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->SiglaPartidoParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->UfParlamentar."',";
+        $sql .= "'".$xml->IdentificacaoParlamentar->SexoParlamentar."'";
+        $sql .= "),";
+        if($i%10 == 0){
+            echo "Estou na linha $i <br>";
+        }
+    }
+    $sql = substr($sql,0,-1).";";
+    /**
+     * Inser os dados na tabela
+     */
+    $this->executeComando($sql);
+    echo date("H:i:s")."fim senadores <hr>";
+}
+
+/**
+ * Cria o insert dos gastos
+ */
+public function insertGastos($ano){
+    $i = 0;
+
+    echo "Inicio de gastos".\date("H:i:s")."<br>";
+
+    foreach($this->getGastos($ano) as $linha){
+
+            if(\mb_strtoupper($this->senador[1]) 
+            !== \utf8_encode($linha[2]) || !isset($this->senador)){
+                $this->senador = \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable::
+                search(\utf8_encode($linha[2]));
+            }
+            $sql = "INSERT INTO gastos(`codigo_parlamentar`,`ano`,`mes`,`senador`,`tipo_despesa`,`cnpj_cpf`,
+            `fornecedor`,`documento`,`data`,`detalhamento`,`valor_reembolsado`) VALUES";
+            $codigo = ($this->senador !== FALSE)? $this->senador[0]:0;
+            $sql .= "(";
+            $sql .= "'".$codigo."',";
+            $sql .= "'".$linha[0]."',";
+            $sql .= "'".$linha[1]."',";
+            $sql .= "'".\utf8_encode($linha[2])."',";
+            $sql .= "'".\str_replace("'","",\utf8_encode($linha[3]))."',";
+            $sql .= "'".$linha[4]."',";
+            $sql .= "'".\str_replace("'","",\utf8_encode($linha[5]))."',";
+            $sql .= "'".$linha[6]."',";
+            //Criando data
+            $data = \DateTime::createFromFormat("d/m/Y",$linha[7]);
+            $sql .= "'".$data->format("Y-m-d")."',";
+            $sql .= "'".\str_replace(["'",'"'],"",\utf8_encode($linha[8]))."',";
+            $sql .= "'".\str_replace(",",".",$linha[9])."'";
+            $sql .= ");";
+            $this->executeComando($sql);
+            $i++;
+            if($i % 100 == 0){
+                echo "estou na linha $i<br>";
+            } 
+        }
+        echo date("H:i:s")."Fim de gastos $ano<hr>";
+    }
+
+    public function carregaTabelaCategorias(){
         $sql = "SELECT DISTINCT tipo_despesa FROM gastos;";
 
-        $con = \Ufrpe\Senadores\Data\Connection::getInstance();
+        $con = Connection::getInstance();
         $stmt = $con->prepare($sql);
         $stmt->execute();
         $rs = $stmt->fetchAll();
@@ -214,7 +215,7 @@ class Extractor{
 
     public function atualizaTabelaGastos(){
 
-        $con = \Ufrpe\Senadores\Data\Connection::getInstance();
+        $con = Connection::getInstance();
         $stmt = $con->prepare("SELECT * FROM categorias");
         $stmt->execute();
         $categorias = $stmt->fetchAll();
@@ -226,6 +227,39 @@ class Extractor{
     }
 
     public function classificaPremiacoes(){
-        
+        $con = Connection::getInstance();
+        $stmt = $con->prepare("SELECT * FROM categorias");
+        $stmt->execute();
+        $tabGastos = $stmt->fetchAll();
+        foreach($tabGastos as $gasto){
+            $stmt2 = $con->prepare("SELECT codigo_parlamentar 
+            FROM gastos 
+            WHERE categoria_gastos LIKE ? AND codigo_parlamentar <> 0 
+            GROUP BY categoria_gastos,codigo_parlamentar 
+            ORDER BY SUM(valor_reembolsado) DESC 
+            LIMIT 3");
+            $stmt2->execute([$gasto['idcategoria']]);
+            $tabPremios = $stmt2->fetchAll();
+            $i = 1;
+            foreach($tabPremios as $premio){
+                $stmt3 = $con->prepare("INSERT INTO premiacao(codigo_parlamentar,categoria_gastos,colocacao,premio,img) 
+                VALUES(?,?,?,?,?);");
+                $stmt3->execute([$premio['codigo_parlamentar'],$gasto['idcategoria'],$i,$this->getClassificacao($i),
+                "img".$gasto['idcategoria']."_".$i.".png"]);
+                $i++;
+            }
+        }
+    }
+
+    private function getClassificacao($i){
+        switch($i){
+            case 1: return "ouro";
+                    break;
+            case 2: return "prata";
+                    break;
+            case 3: return "bronze";
+                    break;
+            default: return null;
+        }
     }
 }

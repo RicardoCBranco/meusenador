@@ -13,13 +13,26 @@ class CategoriaTable{
         return $stmt->fetchAll();
     }
 
-    public function dados($id){
+    public function dados($inicio){
         $conn = Connection::getInstance();
-        $stmt = $conn->prepare("SELECT senador, SUM(valor_reembolsado) as soma 
-                                FROM gastos WHERE categoria_gastos LIKE ? AND codigo_parlamentar <> 0 GROUP BY 
-                                codigo_parlamentar ORDER BY soma DESC LIMIT 5;");
-        $stmt->execute([$id]);
+        $stmt = $conn->prepare("SELECT senador, SUM(IF(categoria_gastos = 1, valor_reembolsado,0)) as contratos,
+        SUM(IF(categoria_gastos = 2, valor_reembolsado,0)) as combustiveis,
+        SUM(IF(categoria_gastos = 3, valor_reembolsado,0)) as passagens,
+        SUM(IF(categoria_gastos = 4, valor_reembolsado,0)) as aluguel,
+        SUM(IF(categoria_gastos = 5, valor_reembolsado,0)) as material,
+        SUM(IF(categoria_gastos = 6, valor_reembolsado,0)) as divulgacao,
+        SUM(IF(categoria_gastos = 7, valor_reembolsado,0)) as seguranca
+        FROM gastos WHERE codigo_parlamentar <> 0 GROUP BY codigo_parlamentar 
+        ORDER BY senador LIMIT 4 OFFSET $inicio;");
+        $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    public function totalDeRegistros(){
+        $conn = Connection::getInstance();
+        $stmt = $conn->prepare("SELECT COUNT(IF(codigo_parlamentar <> 0,1,0)) as total FROM senadores");
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     public function find($id){

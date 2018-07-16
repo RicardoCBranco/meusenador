@@ -1,14 +1,33 @@
 <?php
-        include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
-        include('phplot/phplot.php');
-
-        $ctrl = new \Ufrpe\Senadores\Modules\Categoria\Control\CategoriaController();
-        $dados = $ctrl->detailAction();
-                $gr = new PHPlot(720,360);
-                $gr->SetTitle(wordwrap(utf8_decode($dados['categoria']['tipo_despesa']),70,"\n",true));
-                $gr->SetDataType('text-data');
-                $gr->SetXTitle('Senadores');
-                $gr->setYTitle('Gastos(R$)');
-                $gr->SetPlotType('bars');
-                $gr->SetDataValues($dados['detailpage']);
-                $gr->DrawGraph();
+    include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
+	$ger = new \Ufrpe\Senadores\Modules\Categoria\Control\CategoriaController();
+	$dados = $ger->detailAction();
+?>
+<table id="datatable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Senador</th>
+            <th>Contratos</th>
+            <th>Combustíveis</th>
+            <th>Passagens</th>
+            <th>Aluguel</th>
+            <th>Material p/ Escritório</th>
+            <th>Divulgação</th>
+            <th>Segurança</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($dados['detailpage'] as $ln):?>
+        <tr>
+            <td><?=$ln['senador']?></td>
+            <td><?=$ln['contratos']?></td>
+            <td><?=$ln['combustiveis']?></td>
+            <td><?=$ln['passagens']?></td>
+            <td><?=$ln['aluguel']?></td>
+            <td><?=$ln['material']?></td>
+            <td><?=$ln['divulgacao']?></td>
+            <td><?=$ln['seguranca']?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

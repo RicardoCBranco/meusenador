@@ -5,33 +5,22 @@
         require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
         $dados = $ctrl->indexAction();
+        $ctlPr = new Ufrpe\Senadores\Modules\Premiacao\Control\PremiacaoController();
         $i = 0;
         ?>
         <link rel="stylesheet" href="/css/bootstrap.min.css"/>
          <link rel="stylesheet" href="/css/mapa.css">
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-            <div class="col-md-2 text-center">
-                    <img alt="Brand" src="img/logo meu senador 2.png" class="img-fluid size"/>
+    <nav class="navbar navbar-light bg-light">
+    <span>
+        <img alt="Brand" src="img/logo meu senador 2.png" class="img-fluid size" width="80" height="80"/>
                     <h5 class="caption center-block">Meu Senador</h5>
-            </div>
-            <div class="col-md-10 text-right">
-                <a href="/contato">Contato</a>
-                <a href="" onload="disabled" data-toggle="modal" data-target="#modalSobre">Sobre</a>
-                <a href="" onload="disabled" data-toggle="modal" data-target="#modalDados">Dados</a>
-            </div>
-            </div>
-        </div>
-        
-        <div class="container">
-            <div class="content">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                    <form method="post" action="" class="form-signin">
+    </span>
+    <div class="p-2 align-self-start">
+                    <form method="post" action="" class="form form-inline">
                         <div class="form-group">
-                            <label for="parlamentares" class="sr">Parlamentar:</label>
+                            <label for="parlamentares" class="sr-only">Parlamentar:</label>
                             <select name="parlamentares" class="form-control"
                                 id="parlamentares" onchange="dados(this.id, 'modal')">
                             <option>Selecione um político</option>
@@ -44,24 +33,39 @@
                                     <?php endforeach; ?>
                             </select>
                             </div>
-                    <input type="button" name="btnOk" value="Confirma" onload="disabled" 
-                           data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-success">
+                            <div class="form-group">
+                                <input type="button" name="btnOk" value="Confirma" onload="disabled" 
+                                    data-toggle="modal" data-target="#myModal" 
+                                    class="btn btn-primary btn-success">
+                            </div>
                         </form>
                     </div>
-                    <!-- Fim do Formulário -->
-                    <div class="col-sm-2">
-                        <a href="categorias/" title="Categoria de Gastos"><image src="img/gastos.png" class="image img-fluid" alt="Gastos"></a>
-                    </div>
+                    <!-- Fim do Formulário --> 
+                <div class="btn-group mr-2" role="group" arial-label="Grupo">
+                    <button onclick="location.href='/contato'" class="btn btn-secondary">Contato</button>
+                    <button class="btn btn-secondary" onload="disabled" data-toggle="modal" data-target="#modalSobre">Sobre</button>
+                    <button class="btn btn-secondary" onload="disabled" data-toggle="modal" data-target="#modalDados">Dados</button>
+                </div> 
+    </nav>               
+        
+        <div class="container">
+            <div class="content">
+                <div class="d-flex flex-column"> 
                     <!-- Tabela de Gastos -->
-                    <div class="col-md-8">
-                    <a href="gastos/show.php">Listar todos</a>
+                    <div class="p-2">
+                        <button class="btn btn-success" onclick="location.href='gastos/show.php'">Listar todos</button>
+                        <button onclick="location.href='categorias/'" title="Categoria de Gastos" class="btn btn-success">Categoria de Gastos</button>
+                    </div>
+                    <div class="p-2 d-flex">
+                    <div class="align-self-start">
                     <table class="table table-striped table-condensed">
                     <thead class="thead-dark">
                         <tr>
                             <th>Rank</th>
                             <th>Senador</th>
                             <th>Partido</th>
-                            <th>Gastos/Dia(R$)</th>
+                            <th>Prêmio</th>
+                            <th>Gastos/Dia</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +74,12 @@
                                 <td><?=++$i?>º</td>
                                 <td><a href="gastos/?id=<?=$row['codigo_parlamentar']?>"><?=$row['nome_parlamentar']?></a></td>
                                 <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
+                                <td><?php foreach($ctlPr->premioParlamentar($row['codigo_parlamentar']) as $img):?>
+                                    <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" 
+                                    title="Premio de <?=$img['premio']?> por gasto com <?=$img['titulo']?>"
+                                    width="20" height="20">
+                                    <?php endforeach; ?>
+                                </td>
                                 <td><?=\number_format($row['soma'],2,",",".")?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -83,9 +93,9 @@
                     </table>
                     </div>
                     <!-- Fim da tabela de gastos -->
-
+                    
                   <!-- Mapa -->
-        <div class="col-md-4">
+        <div class="ml-4">
 
 <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enable-background="new 0 0 450 460" xml:space="preserve">
 
@@ -771,7 +781,7 @@
 
 <!-- Creditos to olx.com.br -->
 <!-- fim do mapa -->
-
+</div>
 
                 </div>
             </div>
@@ -822,6 +832,7 @@
                         <li>Wellington Eugênio</li>
                         <li>Verônica M C Santos</li>
                         </ul>
+                        <p>Orientador: Kellyton dos Santos Brito</p>
                         </div>
                         <!-- Rodapé -->
                         <div class="modal-footer">

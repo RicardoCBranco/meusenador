@@ -8,19 +8,18 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Gastos</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"/>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+         <script src="../js/jquery.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <!------ Include the above in your HEAD tag ---------->
 
-        <script language="JavaScript" src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
-        <script language="JavaScript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script language="JavaScript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+        <script language="JavaScript" src="../js/jquery-3.3.1.js" type="text/javascript"></script>
+        <script language="JavaScript" src="../js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script language="JavaScript" src="../js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap4.min.css">
         <script>
             $(document).ready(function(){
                 $("#gastos").DataTable();
@@ -45,8 +44,8 @@ and open the template in the editor.
                     </div>
                     <hr>
                     <div class="col-md-2">
-                        <image src="<?=$dados['senador']['url_foto_parlamentar']?>" title="foto.jpg"
-                        class="image img-thumbnail">
+                        <image src="<?=$dados['senador']['url_foto_parlamentar']?>" title="foto parlamentar"
+                        class="image img-thumbnail" alt="<?=$dados['senador']['nome_parlamentar']?>">
                     </div>
                     <div class="col-md-2">
                         <?php foreach($dados['premios'] as $premio):?>

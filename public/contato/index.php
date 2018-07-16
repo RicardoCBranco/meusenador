@@ -5,10 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Contato</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-         integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" 
-         crossorigin="anonymous" />
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <script src='../js/api.js'></script>
          <?php
             require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
             $ctrl = new Ufrpe\Senadores\Modules\Contato\Control\ContatoController();

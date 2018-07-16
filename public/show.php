@@ -7,7 +7,7 @@ $parlamentar = $dados['parlamentar'];
 <div class="row">
     <div class="col-md-4">
         <img src="<?=$parlamentar['url_foto_parlamentar']?>"
-            class="img-thumbnail" style="width:100%">
+            class="img-thumbnail" style="width:100%" alt="<?=$parlamentar['nome_parlamentar']?>">
     </div>
     <div class="col-md-8">
         <h3><?=$parlamentar['nome_parlamentar']?></h3>

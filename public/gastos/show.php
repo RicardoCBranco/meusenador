@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista dos Senadores por Gastos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
         <?php
             include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
             $ctrl = new \Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
             $dados = $ctrl->showAction();
+            $ctlPr = new \Ufrpe\Senadores\Modules\Premiacao\Control\PremiacaoController();
         ?>
 </head>
 <body>
@@ -26,7 +27,8 @@
             <table class="table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th>Senador</th><th>Partido</th><th>Média de Gastos Diários (R$)</th><th>Ação</th>
+                        <th>Senador</th><th>Partido</th><th>Média de Gastos Diários (R$)</th>
+                        <th>Prêmio</th><th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +37,12 @@
                         <td><?=$row['senador']?></td>
                         <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
                         <td><?=\number_format($row['soma'],2,",",".")?></td>
+                        <td><?php foreach($ctlPr->premioParlamentar($row['codigo_parlamentar']) as $img):?>
+                            <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" 
+                            title="Premio de <?=$img['premio']?> por gasto com <?=$img['titulo']?>"
+                            width="20" height="20">
+                            <?php endforeach; ?>
+                        </td>
                         <td><a href="/gastos?id=<?=$row['codigo_parlamentar']?>">Gastos</a></td>
                     </tr>
                     <?php endforeach; ?>
