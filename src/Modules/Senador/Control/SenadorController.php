@@ -4,6 +4,7 @@ namespace Ufrpe\Senadores\Modules\Senador\Control;
 use \Ufrpe\Senadores\Modules\Senador\Model\SenadorTable;
 use \Ufrpe\Senadores\Modules\Gastos\Model\GastosTable;
 use \Ufrpe\Senadores\Modules\Premiacao\Model\PremiacaoTable;
+use \Ufrpe\Senadores\Modules\Categoria\Model\CategoriaTable;
 
   class SenadorController  {
       private $table;
@@ -13,7 +14,8 @@ use \Ufrpe\Senadores\Modules\Premiacao\Model\PremiacaoTable;
         }
   
   	    public function indexAction(){
-              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::top(5));
+              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::top(5),
+            'categorias' => CategoriaTable::all());
   	    }
         
         public function showAction(){

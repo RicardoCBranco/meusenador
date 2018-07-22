@@ -7,6 +7,7 @@
         $dados = $ctrl->indexAction();
         $ctlPr = new Ufrpe\Senadores\Modules\Premiacao\Control\PremiacaoController();
         $i = 0;
+        $ctlGastos = new Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
         ?>
         <link rel="stylesheet" href="/css/bootstrap.min.css"/>
          <link rel="stylesheet" href="/css/mapa.css">
@@ -23,7 +24,7 @@
                             <label for="parlamentares" class="sr-only">Parlamentar:</label>
                             <select name="parlamentares" class="form-control"
                                 id="parlamentares" onchange="dados(this.id, 'modal')">
-                            <option>Selecione um político</option>
+                            <option>Escolha um senador:</option>
                             <?php foreach ($dados['senadores'] as $opt): ?>
                                 <option value="<?= $opt['0'] ?>"
                                 <?php if (filter_input(INPUT_POST, "parlamentares") == $opt['codigo_parlamentar']): ?>
@@ -54,10 +55,9 @@
                     <!-- Tabela de Gastos -->
                     <div class="p-2">
                         <button class="btn btn-success" onclick="location.href='gastos/show.php'">Listar todos</button>
-                        <button onclick="location.href='categorias/'" title="Categoria de Gastos" class="btn btn-success">Categoria de Gastos</button>
                     </div>
                     <div class="p-2 d-flex">
-                    <div class="align-self-start">
+                    <div class="mt-5 align-self-start">
                     <table class="table table-striped table-condensed">
                     <thead class="thead-dark">
                         <tr>
@@ -76,7 +76,7 @@
                                 <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
                                 <td><?php foreach($ctlPr->premioParlamentar($row['codigo_parlamentar']) as $img):?>
                                     <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" 
-                                    title="Premio de <?=$img['premio']?> por gasto com <?=$img['titulo']?>"
+                                    title="<?=$img['colocacao']?>° lugar entre o que mais gastam com <?=$img['titulo']?>"
                                     width="20" height="20">
                                     <?php endforeach; ?>
                                 </td>
@@ -84,9 +84,9 @@
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
+                    <tfoot class="border">
                         <tr>
-                            <td colspan="3">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)<br> 
+                            <td colspan="5">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)<br> 
                             Dados de 01/01/2011 e atualizados até 27/06/2018</td>
                         </tr>
                     </tfoot>
@@ -95,7 +95,7 @@
                     <!-- Fim da tabela de gastos -->
                     
                   <!-- Mapa -->
-        <div class="ml-4">
+        <div class="ml-5">
 
 <svg version="1.1" id="svg-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="450px" height="460px" viewBox="0 0 450 460" enable-background="new 0 0 450 460" xml:space="preserve">
 
@@ -782,8 +782,33 @@
 <!-- Creditos to olx.com.br -->
 <!-- fim do mapa -->
 </div>
-
-                </div>
+<h5>Gastos por categoria</h5><hr>
+<div class="row">
+    <?php foreach($dados['categorias'] as $cat):?>
+    <div class="col-md-6">
+        <table class="table table-striped table-condensed">
+            <thead class="thead-light">
+                <tr>
+                    <th colspan="3"><?=$cat['tipo_despesa']?></th>
+                </tr>
+                <tr>
+                    <th>Senador</th><th>Média de Gastos Mensal</th><th>Gastos Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($ctlGastos->getTopCategorias($cat['idcategoria']) as $linha):?>
+                <tr>
+                    <td><?=$linha['senador']?></td>
+                    <td></td>
+                    <td><?=\number_format($linha['soma'],2,",",".")?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php endforeach;?>
+    </div>
+</div>
             </div>
             <!-- Estrutura do modal -->
             <div class="modal" id="myModal">

@@ -13,37 +13,6 @@
          <script src="../js/jquery.min.js"></script>
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script>
-        function dados(id){
-            $.get("detail.php?start="+id,function(dados){
-                $("#datatable").empty();
-                $("#datatable").html(dados);
-                Highcharts.chart('container', {
-                data: {
-                    table: 'datatable'
-                },
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Gastos por Categorias'
-                },
-                yAxis: {
-                    allowDecimals: false,
-                title: {
-                    text: 'Valores(R$)'
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                this.point.y + ' ' + this.point.name.toLowerCase();
-            }
-        }
-    });
-            });
-        }
-        </script>        
 
         <!-- Grãficos -->
         <script src="code/highcharts.js"></script>
@@ -91,14 +60,6 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-</div>
-<div class="btn-toolbar float-right" role="toolbar" aria-label="Navegador">
-    <div class="btn-group mr-2" role="group" arial-label="Grupo">
-    <button onclick="dados(0)" class="btn btn-secondary">Início</button>
-        <?php for($i = 1; $i < ($dados['contador']['total']/4)-1; $i++):?>
-            <button onclick="dados(<?=(4*$i)?>)" class="btn btn-secondary"><?=$i?></button>
-        <?php endfor;?>
-    </div>
 </div>
 </div>
 

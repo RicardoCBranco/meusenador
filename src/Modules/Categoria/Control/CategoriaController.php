@@ -6,15 +6,15 @@ class CategoriaController{
     public function __construct(){}
 
     public function indexAction(){
-        $tbl = new CategoriaTable();
-        return array('categorias' => $tbl->all());
+        return array('categorias' => CategoriaTable::all());
     }
 
     public function detailAction(){
-        $inicio = !is_null(filter_input(INPUT_GET,"start"))?filter_input(INPUT_GET,"start"):0;
-        $tbl = new CategoriaTable();
-
-        return array('detailpage' => $tbl->dados($inicio),
-         'contador' => $tbl->totalDeRegistros());
-    }   
+       $ids = unserialize(filter_input(INPUT_GET,"id"));
+       $array = array();
+       foreach($ids as $id){
+            $array = array_merge(CategoriaTable::gastosParlamentar($id),$array);
+        }
+        return array('detailpage' => $array); 
+    }
 }

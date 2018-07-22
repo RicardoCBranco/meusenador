@@ -17,7 +17,7 @@ $parlamentar = $dados['parlamentar'];
     <div class="col-md-6">
         <?php foreach($dados['premios'] as $premio): ?>
         <img src="img/<?=$premio['img']?>" class="image img-thumbnail"
-        alt="<?=$premio['categoria_despesa']?>" title="<?=$premio['titulo']?>">
+        alt="<?=$premio['categoria_despesa']?>" title="<?=$premio['colocacao']?>º lugar entre os que mais gastam com <?=$premio['titulo']?>">
         <?php endforeach; ?>
     </div>
     <div class="col-md-12">

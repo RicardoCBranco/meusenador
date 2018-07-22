@@ -52,7 +52,7 @@
                 Gasto Médio por dia:R$ <?=number_format($ln['gastos'],2,",",".")?><br>
                 <a href="../gastos/?id=<?=$ln['codigo_parlamentar']?>">Detalhamento dos gastos</a><br>
                 <?php foreach($ctlPr->premioParlamentar($ln['codigo_parlamentar']) as $img):?>
-                <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" title="Premio de <?=$img['premio']?> por gasto com <?=$img['titulo']?>">
+                <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" title="<?=$img['colocacao']?>º lugar entre os que mais gastam com <?=$img['titulo']?>">
                 <?php endforeach; ?>
             </td>
     </tr>
