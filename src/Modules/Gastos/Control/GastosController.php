@@ -27,8 +27,4 @@ class GastosController{
         }
         return array('gastos' => GastosTable::all());
     }
-
-    public function getTopCategorias($idCategoria){
-        return GastosTable::getTopCategorias($idCategoria);
-    }
 }

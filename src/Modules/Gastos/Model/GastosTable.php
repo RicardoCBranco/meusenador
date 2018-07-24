@@ -2,6 +2,8 @@
 namespace Ufrpe\Senadores\Modules\Gastos\Model;
 
 use \Ufrpe\Senadores\Data\Connection;
+use \Ufrpe\Senadores\Modules\Categoria\Model\CategoriaTable;
+
 class GastosTable{
     private function __construct(){}
 
@@ -38,14 +40,34 @@ class GastosTable{
         return $stmt->fetchAll();
     }
 
-    public static function getTopCategorias($idCategoria){
-        $con = Connection::getInstance();
-        $stmt = $con->prepare("SELECT senador, SUM(valor_reembolsado) as soma 
-        FROM gastos 
-        WHERE categoria_gastos LIKE ? 
-        GROUP BY codigo_parlamentar 
-        ORDER BY soma DESC LIMIT 5");
-        $stmt->execute([$idCategoria]);
-        return $stmt->fetchAll();
+    public static function getTopCategorias(){
+        $script = null;
+        $i = 1;
+        foreach(CategoriaTable::all() as $cat){
+            $script .= "<div class='col-md-6'>";
+            $script .= "<h5>$i. ".$cat['tipo_despesa']."</h5>";
+            $script .= "<table class='table table-striped table-condensed'>";
+            $script .= "<thead class='thead-dark'><tr><th>Senador</th><th>Gastos</th></tr></thead>";
+            $script .= "<tbody>";
+
+            $con = Connection::getInstance();
+            $stmt = $con->prepare("SELECT categoria_gastos, senador, SUM(valor_reembolsado) as soma 
+            FROM gastos 
+            WHERE categoria_gastos LIKE ? AND codigo_parlamentar <> 0
+            GROUP BY codigo_parlamentar 
+            ORDER BY soma DESC LIMIT 5");
+            $stmt->execute([$cat['idcategoria']]);
+            foreach($stmt->fetchAll() as $row){
+                $script .= "<tr>";
+                $script .= "<td>".$row['senador']."</td>";
+                $script .= "<td>".number_format($row['soma'],2,',','.')."</td>";
+                $script .= "</tr>";
+            }            
+            $script .= "</tbody>";
+            $script .= "</table>";
+            $script .= "</div>";
+            $i++;
+        }
+        return $script;
     }
 }

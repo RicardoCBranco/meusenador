@@ -14,8 +14,9 @@ use \Ufrpe\Senadores\Modules\Categoria\Model\CategoriaTable;
         }
   
   	    public function indexAction(){
-              return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::top(5),
-            'categorias' => CategoriaTable::all());
+
+          return array("senadores" => SenadorTable::all(), "gastos" => GastosTable::top(5),
+            'categorias' => CategoriaTable::all(),'tabelas' => $this->montaTabelas());
   	    }
         
         public function showAction(){
@@ -28,6 +29,10 @@ use \Ufrpe\Senadores\Modules\Categoria\Model\CategoriaTable;
         public function estadosAction(){
           $sigla = filter_input(INPUT_GET,"uf");
           return array("senadores" => SenadorTable::getEstado($sigla));
+        }
+
+        private function montaTabelas(){
+          return GastosTable::getTopCategorias();
         }
   
 }

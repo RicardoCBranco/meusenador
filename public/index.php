@@ -7,7 +7,6 @@
         $dados = $ctrl->indexAction();
         $ctlPr = new Ufrpe\Senadores\Modules\Premiacao\Control\PremiacaoController();
         $i = 0;
-        $ctlGastos = new Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
         ?>
         <link rel="stylesheet" href="/css/bootstrap.min.css"/>
          <link rel="stylesheet" href="/css/mapa.css">
@@ -782,31 +781,9 @@
 <!-- Creditos to olx.com.br -->
 <!-- fim do mapa -->
 </div>
-<h5>Gastos por categoria</h5><hr>
-<div class="row">
-    <?php foreach($dados['categorias'] as $cat):?>
-    <div class="col-md-6">
-        <table class="table table-striped table-condensed">
-            <thead class="thead-light">
-                <tr>
-                    <th colspan="3"><?=$cat['tipo_despesa']?></th>
-                </tr>
-                <tr>
-                    <th>Senador</th><th>Média de Gastos Mensal</th><th>Gastos Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($ctlGastos->getTopCategorias($cat['idcategoria']) as $linha):?>
-                <tr>
-                    <td><?=$linha['senador']?></td>
-                    <td></td>
-                    <td><?=\number_format($linha['soma'],2,",",".")?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php endforeach;?>
+    <h5>Gastos por categoria</h5><hr>
+    <div class="row">
+    <?=$dados['tabelas']?>
     </div>
 </div>
             </div>
