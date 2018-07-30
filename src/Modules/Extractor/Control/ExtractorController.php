@@ -13,7 +13,7 @@ class ExtractorController{
         for($i = $ano; $i >= $ano - 8; $i--){
             $ext->insertGastos($i);
         }
-        $ext->criarTabelaCategorias();
+        $ext->carregaTabelaCategorias();
         $ext->atualizaTabelaGastos();
         $ext->classificaPremiacoes();
 

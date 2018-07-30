@@ -64,7 +64,7 @@
                             <th>Senador</th>
                             <th>Partido</th>
                             <th>Prêmio</th>
-                            <th>Gastos/Dia</th>
+                            <th>Gastos/Dia<image src="img/info.png" alt="info.png" title="Calculo dos gastos através da soma dos gastos totais dividido pela diferença entre a data maior e a data menor registrada" height="20"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,8 +75,7 @@
                                 <td><?=$row['sigla_partido_parlamentar']."/".$row['uf_parlamentar']?></td>
                                 <td><?php foreach($ctlPr->premioParlamentar($row['codigo_parlamentar']) as $img):?>
                                     <img src="../img/<?=$img['img']?>" alt="<?=$ln['premio']?>" 
-                                    title="<?=$img['colocacao']?>° lugar entre o que mais gastam com <?=$img['titulo']?>"
-                                    width="20" height="20">
+                                    title="<?=$img['colocacao']?>° lugar entre o que mais gastam com <?=$img['titulo']?>" height="25">
                                     <?php endforeach; ?>
                                 </td>
                                 <td><?=\number_format($row['soma'],2,",",".")?></td>
@@ -86,7 +85,7 @@
                     <tfoot class="border">
                         <tr>
                             <td colspan="5">Fonte: Senado Federal (http://www.senado.gov.br/transparencia)<br> 
-                            Dados de 01/01/2011 e atualizados até 27/06/2018</td>
+                            Dados de 01/01/2011 e atualizados até 29/07/2018</td>
                         </tr>
                     </tfoot>
                     </table>

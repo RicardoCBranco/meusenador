@@ -7,7 +7,6 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Gastos</title>
         <link rel="stylesheet" href="../css/bootstrap.min.css"/>
          <script src="../js/jquery.min.js"></script>
         <script src="../js/popper.min.js"></script>
@@ -32,12 +31,27 @@ and open the template in the editor.
                 $("#gastos").DataTable();
             });
         </script>
+        <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
         <?php
             include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
             $ctrl = new \Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
             $dados = $ctrl->indexAction();
             $soma = 0;
         ?>
+        <title>Gastos do Senador <?=$dados['senador']['nome_parlamentar']?></title>
+        <meta property="og:url"           content="http://meusenador<?=filter_input(INPUT_SERVER,"REQUEST_URI")?>" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Gastos do Senador <?=$dados['senador']['nome_parlamentar']?>" />
+        <meta property="og:description"   content="Quadro com os gastos relativo ao senador <?=$dados['senador']['nome_parlamentar']?>
+        com base nos dados existentes no portal da Transparência do Senado Federal" />
+        <meta property="og:image"         content="../img/logo meu senador 2.png" />
+
     </head>
     <body>
         <div class="container container-fluid">
@@ -46,8 +60,8 @@ and open the template in the editor.
                     <div class="col-md-11">
                         <h2><?=$dados['senador']['nome_parlamentar']?></h2>
                     </div>
-                    <div class="col-md-1">
-                        <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+                    <div class="col-sm-1 col-md-1">
+                        <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-thumbnail"></a>
                     </div>
                     <hr>
                     <div class="col-md-2">
@@ -65,8 +79,15 @@ and open the template in the editor.
                         <b>Partido: </b><?=$dados['senador']['sigla_partido_parlamentar']?><br>
                         <b>UF: </b><?=$dados['senador']['uf_parlamentar']?><br>
                         <b>Email: </b><?=$dados['senador']['email_parlamentar']?><br>
-                        <b>Gasto médio por dia: </b>R$ <?=\number_format($dados['senador']['gastos'],2,",",".")?><br>
+                        <b>Gasto médio por dia:<image src="../img/info.png" alt="info.png" title="Calculo dos gastos através da soma dos gastos totais dividido pela diferença entre a data maior e a data menor registrada" height="20"> </b>R$ <?=\number_format($dados['senador']['gastos'],2,",",".")?><br>
                         <b>Soma dos gastos: </b>R$ <?=\number_format($dados['senador']['total'],2,",",".")?>
+                        <!-- Load Facebook SDK for JavaScript -->
+                        <div id="fb-root"></div>
+                        <!-- Your share button code -->
+                        <div class="fb-share-button";
+                            data-href="http://meusenador<?=filter_input(INPUT_SERVER,"REQUEST_URI")?>" 
+                            data-layout="button_count">
+                        </div>
                     </div>
                     <div id="container" style="min-width: 160px; height: 320px; margin: 0 auto" class="col-md-5"></div>
 <table id="datatable" class="table table-striped table-bordered">
@@ -85,7 +106,7 @@ and open the template in the editor.
     <tbody>
         <?php foreach($dados['detailpage'] as $ln):?>
         <tr>
-            <td>Últimos 8 anos</td>
+            <td>Categorias</td>
             <td><?=$ln['contratos']?></td>
             <td><?=$ln['combustiveis']?></td>
             <td><?=$ln['passagens']?></td>

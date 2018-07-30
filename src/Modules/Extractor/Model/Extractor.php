@@ -236,7 +236,7 @@ public function insertGastos($ano){
             FROM gastos 
             WHERE categoria_gastos LIKE ? AND codigo_parlamentar <> 0 
             GROUP BY categoria_gastos,codigo_parlamentar 
-            ORDER BY SUM(valor_reembolsado) DESC 
+            ORDER BY (SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data))) DESC 
             LIMIT 3");
             $stmt2->execute([$gasto['idcategoria']]);
             $tabPremios = $stmt2->fetchAll();

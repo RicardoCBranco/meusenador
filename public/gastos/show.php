@@ -12,16 +12,7 @@
         <!------ Include the above in your HEAD tag ---------->
 
         <script language="JavaScript" src="../js/jquery-3.3.1.js" type="text/javascript"></script>
-        <script language="JavaScript" src="../js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script language="JavaScript" src="../js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-
-        <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap4.min.css">
-        <script>
-            $(document).ready(function(){
-                $("#gastos").DataTable();
-            });
-        </script>
         <?php
             include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
             $ctrl = new \Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
