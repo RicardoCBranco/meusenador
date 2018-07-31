@@ -1,6 +1,13 @@
 <html>
     <head>
         <title>Meu Senador</title>
+        <meta property="og:url"           content="http://meusenador" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Meu Senador"/>
+        <meta property="og:description"   content="Projeto destinado para acompanhamento dos gastos realizados pelos senadores
+        com base nos dados existentes no portal da Transparência do Senado Federal" />
+        <meta property="og:image"         content="../img/logo meu senador 2.png" />
+        <meta name="keywords" content="Gastos, Senadores, Comparativo, Transparência">
         <?php
         require_once filter_input(INPUT_SERVER, "DOCUMENT_ROOT") . '/../vendor/autoload.php';
         $ctrl = new Ufrpe\Senadores\Modules\Senador\Control\SenadorController();
@@ -10,6 +17,7 @@
         ?>
         <link rel="stylesheet" href="/css/bootstrap.min.css"/>
          <link rel="stylesheet" href="/css/mapa.css">
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
     </head>
     <body>
     <nav class="navbar navbar-light bg-light">
@@ -878,5 +886,49 @@
         <script src="/js/popper.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="js/select_dinamico.js" type="text/javascript"></script>
+        
+<!-- Footer -->
+<footer class="footer bg-light">
+
+    <!-- Footer Elements -->
+    <div class="container">
+
+      <!-- Social buttons -->
+      <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+          <a class="btn-floating btn-fb mx-1">
+            <i class="fa fa-facebook"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-tw mx-1">
+            <i class="fa fa-twitter"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-gplus mx-1">
+            <i class="fa fa-google-plus"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-li mx-1">
+            <i class="fa fa-linkedin"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-dribbble mx-1">
+            <i class="fa fa-dribbble"> </i>
+          </a>
+        </li>
+      </ul>
+      <!-- Social buttons -->
+      <div class="text-center">
+        Recife - Julho/2018
+      </div>
+
+    </div>
+    <!-- Footer Elements -->
+  </footer>
+<!-- Footer -->
     </body>
 </html>

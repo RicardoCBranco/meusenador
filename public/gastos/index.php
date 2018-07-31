@@ -8,7 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="../css/bootstrap.min.css"/>
-         <script src="../js/jquery.min.js"></script>
+        <script src="../js/jquery.min.js"></script>
         <script src="../js/popper.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <!------ Include the above in your HEAD tag ---------->
@@ -25,12 +25,15 @@ and open the template in the editor.
         <script src="../categorias/code/modules/data.js"></script>
         <script src="../categorias/code/modules/exporting.js"></script>
         <script src="../categorias/code/modules/export-data.js"></script>
-
+        
+        <!-- Script para data table -->
         <script>
             $(document).ready(function(){
                 $("#gastos").DataTable();
             });
         </script>
+
+        <!-- Script para facebook -->
         <script>(function(d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];
                         if (d.getElementById(id)) return;
@@ -38,6 +41,7 @@ and open the template in the editor.
                         js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
                         fjs.parentNode.insertBefore(js, fjs);
                     }(document, 'script', 'facebook-jssdk'));</script>
+
         <?php
             include_once filter_input(INPUT_SERVER,"DOCUMENT_ROOT")."/../vendor/autoload.php";
             $ctrl = new \Ufrpe\Senadores\Modules\Gastos\Control\GastosController();
@@ -61,7 +65,7 @@ and open the template in the editor.
                         <h2><?=$dados['senador']['nome_parlamentar']?></h2>
                     </div>
                     <div class="col-sm-1 col-md-1">
-                        <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-thumbnail"></a>
+                        <a href="/"><image src="../img/house-icon-green.png" title="Home" width="40" height="40" class="img-fluid"></a>
                     </div>
                     <hr>
                     <div class="col-md-2">

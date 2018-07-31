@@ -22,7 +22,7 @@
             <h2>Senadores/<?=filter_input(INPUT_GET,"uf")?></h2>
         </div>
         <div class="col-md-1">
-            <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-fluid"></a>
+            <a href="/"><image src="../img/house-icon-green.png" title="Home" width="40" height="40" class="img-fluid"></a>
         </div>
     </div>
 
