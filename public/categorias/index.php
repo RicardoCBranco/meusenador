@@ -28,7 +28,7 @@
                     }(document, 'script', 'facebook-jssdk'));
         </script>
 
-        <title>Comparativo de Gastos:<?=implode(" - ",(array_column($dados['detailpage'],"senador")))?></title>
+        <title>Comparativo de Gastos:<?=implode(" - ",(array_column($dados['detailpage'],"nome_parlamentar")))?></title>
         <meta property="og:url"           content="http://meusenador<?=filter_input(INPUT_SERVER,"REQUEST_URI")?>" />
         <meta property="og:type"          content="website" />
         <meta property="og:title"         content="Comparativo de Gastos: <?=implode(" - ",(array_column($dados['detailpage'],"senador")))?>" />
@@ -42,7 +42,7 @@
     <div class="container">
     <div class="row">
         <div class="col-md-11">
-            <h2>Comparativo de Gastos: <?=implode(" - ",(array_column($dados['detailpage'],"senador")))?></h2>
+            <h2>Comparativo de Gastos: <?=implode(" - ",(array_column($dados['detailpage'],"nome_parlamentar")))?></h2>
         </div>
         <div class="col-md-1">
             <a href="/"><image src="../img/house-icon-green.png" title="Home" class="img-responsive" width="20" height="20"></a>
@@ -73,7 +73,7 @@
     <tbody>
         <?php foreach($dados['detailpage'] as $ln):?>
         <tr>
-            <td><?=$ln['senador']?></td>
+            <td><?=$ln['nome_parlamentar']?></td>
             <td><?=$ln['contratos']?></td>
             <td><?=$ln['combustiveis']?></td>
             <td><?=$ln['passagens']?></td>

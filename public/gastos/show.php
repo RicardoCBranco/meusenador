@@ -64,7 +64,7 @@
         <div class="card">
                 <form method="post" action="" class="form">
                 <div class="card-header">
-                    <h5>Selecione até cinco senadores para fazer a comparação de gastos.(Clique no botão selecionar na tabela abaixo em seguida no botão Comparar)</h5>
+                    <h5>Senadores selecionados:</h5>
                 </div>
                 <div class="card-body">
                     <div class="form-control"><label class="sr col-md-6">Senador</label><label class="sr col-md-6">Partido</label></div>
@@ -84,6 +84,10 @@
             </div>
             </form>
             </div>
+        </div>
+        <div class="mb-5">
+        <span>Selecione até 05 senadores na tabela abaixo clicando no botão "Sel." o nome e o partido aparecerão acima,
+        após selecionar os senadores desejados aperte no botão "Comparar" para gerar o gráfico comparativo. </span>
         </div>
             <table class="table table-condensed table-hover" id="gastos">
                 <thead>

@@ -21,13 +21,13 @@ class GastosTable{
 
     public static function all(){
         $conn = Connection::getInstance();
-        $stmt = $conn->prepare("SELECT gastos.codigo_parlamentar, senadores.nome_parlamentar, ano, sigla_partido_parlamentar,
-        uf_parlamentar, 
-        SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) as soma 
-        FROM senadores 
-        LEFT JOIN gastos ON (senadores.codigo_parlamentar = gastos.codigo_parlamentar) 
-        WHERE senadores.codigo_parlamentar <> 0 GROUP BY senadores.codigo_parlamentar 
-         ORDER BY soma DESC;");
+            $stmt = $conn->prepare("SELECT senadores.codigo_parlamentar, senadores.nome_parlamentar, ano, sigla_partido_parlamentar,
+            uf_parlamentar, 
+            SUM(valor_reembolsado)/DATEDIFF(MAX(data),MIN(data)) as soma 
+            FROM senadores 
+            LEFT JOIN gastos ON (senadores.codigo_parlamentar = gastos.codigo_parlamentar) 
+            WHERE senadores.codigo_parlamentar <> 0 GROUP BY senadores.codigo_parlamentar 
+            ORDER BY soma DESC;");
         $stmt->execute();
         return $stmt->fetchAll();
     }
